@@ -1,43 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from '@formspree/react';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [status, setStatus] = useState('');
+  const [state, handleSubmit] = useForm("xdklrdde");
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setStatus('Sending...');
-    
-    try {
-      const response = await fetch('https://formspree.io/f/xdklrdde', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-      
-      if (response.ok) {
-        setStatus('Message sent successfully! I\'ll get back to you soon.');
-        setFormData({ name: '', email: '', message: '' });
-      } else {
-        setStatus('Something went wrong. Please try again.');
-      }
-    } catch (error) {
-      setStatus('Something went wrong. Please try again.');
-    }
-  };
+  if (state.succeeded) {
+    return (
+      <section id="contact" className="section contact">
+        <h2>Get In Touch</h2>
+        <div className="contact-content">
+          <div className="form-status success">
+            <h3>Thank you for your message!</h3>
+            <p>I'll get back to you as soon as possible.</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section id="contact" className="section contact">
@@ -49,30 +28,28 @@ const Contact = () => {
             type="text"
             name="name"
             placeholder="Your Name"
-            value={formData.name}
-            onChange={handleChange}
             required
           />
           <input
             type="email"
             name="email"
             placeholder="Your Email"
-            value={formData.email}
-            onChange={handleChange}
             required
           />
           <textarea
             name="message"
             placeholder="Your Message"
             rows="5"
-            value={formData.message}
-            onChange={handleChange}
             required
           ></textarea>
-          <button type="submit" className="submit-button" disabled={status === 'Sending...'}>
-            {status === 'Sending...' ? 'Sending...' : 'Send Message'}
+          <button type="submit" className="submit-button" disabled={state.submitting}>
+            {state.submitting ? 'Sending...' : 'Send Message'}
           </button>
-          {status && <p className="form-status">{status}</p>}
+          {state.errors && state.errors.length > 0 && (
+            <p className="form-status error">
+              There was an error sending your message. Please try again.
+            </p>
+          )}
         </form>
       </div>
     </section>

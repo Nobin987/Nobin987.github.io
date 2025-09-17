@@ -312,9 +312,22 @@ body {
   margin-top: 1rem;
   padding: 1rem;
   border-radius: 5px;
+  text-align: center;
+}
+
+.form-status.success {
   background: #e8f5e8;
   color: #2d5a2d;
-  text-align: center;
+}
+
+.form-status.error {
+  background: #ffe8e8;
+  color: #d32f2f;
+}
+
+.form-status.success h3 {
+  margin-bottom: 0.5rem;
+  color: #2d5a2d;
 }
 
 /* Footer */
