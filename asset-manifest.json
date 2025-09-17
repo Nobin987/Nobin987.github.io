@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/ios-developer-portfolio/static/css/main.94d79b7b.css",
+    "main.js": "/ios-developer-portfolio/static/js/main.8e3fb535.js",
+    "static/js/453.6e04bf4d.chunk.js": "/ios-developer-portfolio/static/js/453.6e04bf4d.chunk.js",
+    "index.html": "/ios-developer-portfolio/index.html",
+    "main.94d79b7b.css.map": "/ios-developer-portfolio/static/css/main.94d79b7b.css.map",
+    "main.8e3fb535.js.map": "/ios-developer-portfolio/static/js/main.8e3fb535.js.map",
+    "453.6e04bf4d.chunk.js.map": "/ios-developer-portfolio/static/js/453.6e04bf4d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.94d79b7b.css",
+    "static/js/main.8e3fb535.js"
+  ]
+}
