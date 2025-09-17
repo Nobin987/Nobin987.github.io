@@ -3315,8 +3315,8 @@ body {
     background: var(--color-primary) !important;
   }
 }
-/
-* Enhanced Section Styles */
+
+/* Enhanced Section Styles */
 .section {
   padding: 80px 0;
   position: relative;
