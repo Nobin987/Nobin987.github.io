@@ -6,6 +6,7 @@ const Contact = () => {
     email: '',
     message: ''
   });
+  const [status, setStatus] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -14,12 +15,28 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission here
-    console.log('Form submitted:', formData);
-    alert('Thank you for your message! I\'ll get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    setStatus('Sending...');
+    
+    try {
+      const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      
+      if (response.ok) {
+        setStatus('Message sent successfully! I\'ll get back to you soon.');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setStatus('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('Something went wrong. Please try again.');
+    }
   };
 
   return (
@@ -52,7 +69,10 @@ const Contact = () => {
             onChange={handleChange}
             required
           ></textarea>
-          <button type="submit" className="submit-button">Send Message</button>
+          <button type="submit" className="submit-button" disabled={status === 'Sending...'}>
+            {status === 'Sending...' ? 'Sending...' : 'Send Message'}
+          </button>
+          {status && <p className="form-status">{status}</p>}
         </form>
       </div>
     </section>
