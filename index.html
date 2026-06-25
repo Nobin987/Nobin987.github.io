@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;background:#07070b;color:#e8e8ee;font-family:'Manrope',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+::selection{background:#00e5a0;color:#07070b;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:#07070b;}
+::-webkit-scrollbar-thumb{background:#1c1c28;border-radius:10px;}
+::-webkit-scrollbar-thumb:hover{background:#00e5a0;}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes grad{0%{background-position:0% 50%}100%{background-position:300% 50%}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+@keyframes ringpulse{0%{transform:scale(.9);opacity:.7}70%{transform:scale(1.25);opacity:0}100%{opacity:0}}
+@keyframes ripple{0%{transform:translate(-50%,-50%) scale(.15);opacity:.5}100%{transform:translate(-50%,-50%) scale(1.9);opacity:0}}
+@keyframes gridmove{from{background-position:0 0,0 0}to{background-position:0 60px,60px 0}}
+@keyframes arcspin{to{transform:rotateX(62deg) rotate(360deg)}}
+@keyframes arcspin2{to{transform:rotateX(58deg) rotate(-360deg)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes spin3d{from{transform:rotateX(0) rotateY(0)}to{transform:rotateX(360deg) rotateY(360deg)}}
+@media (max-width:900px){.hero-row{flex-direction:column!important;text-align:center;gap:30px!important}.hero-copy{align-items:center!important}.hero-headline{font-size:58px!important}.hero-stage-wrap{transform:scale(.82)}}
+@media (max-width:880px){.nav-links{display:none!important}.hero-name{font-size:64px!important}.two-col{grid-template-columns:1fr!important}.showcase-grid{grid-template-columns:1fr!important}}
+</style>
+</helmet>
+
+<div style="position:relative;width:100%;min-height:100vh;background:radial-gradient(1200px 600px at 80% -5%, rgba(0,229,160,0.10), transparent 60%), radial-gradient(900px 500px at 0% 30%, rgba(34,211,238,0.06), transparent 55%), #07070b;">
+
+  <div id="scroll-bar" style="position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#00e5a0,#22d3ee);z-index:200;box-shadow:0 0 14px #00e5a0;transition:width .08s linear;"></div>
+  <div id="grid-bg" style="position:fixed;inset:-60px 0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(0,229,160,0.045) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,0.045) 1px,transparent 1px);background-size:56px 56px;opacity:.45;mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 80%);-webkit-mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 80%);"></div>
+
+  <!-- ===== 3D APP-DEV BACKGROUND ===== -->
+  <div id="bg3d" style="position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;perspective:1100px;">
+    <div id="bg3d-scene" style="position:absolute;inset:0;transform-style:preserve-3d;will-change:transform;">
+      <span style="position:absolute;left:7%;top:16%;transform:translateZ(-420px);"><span style="display:inline-block;font:700 52px 'JetBrains Mono',monospace;color:rgba(0,229,160,0.19);animation:floatY 8s ease-in-out infinite;">&lt;/&gt;</span></span>
+      <span style="position:absolute;left:85%;top:21%;transform:translateZ(-260px);"><span style="display:inline-block;font:700 40px 'JetBrains Mono',monospace;color:rgba(34,211,238,0.19);animation:floatY 7s ease-in-out infinite .6s;">{ }</span></span>
+      <span style="position:absolute;left:19%;top:71%;transform:translateZ(-160px);"><span style="display:inline-block;font:600 24px 'JetBrains Mono',monospace;color:rgba(255,255,255,0.13);animation:floatY 9s ease-in-out infinite .3s;">func()</span></span>
+      <span style="position:absolute;left:71%;top:75%;transform:translateZ(-340px);"><span style="display:inline-block;font:600 22px 'JetBrains Mono',monospace;color:rgba(167,139,250,0.21);animation:floatY 7.5s ease-in-out infinite .9s;">async / await</span></span>
+      <span style="position:absolute;left:45%;top:11%;transform:translateZ(-520px);"><span style="display:inline-block;font:700 30px 'JetBrains Mono',monospace;color:rgba(34,211,238,0.15);animation:floatY 10s ease-in-out infinite;">=&gt;</span></span>
+      <span style="position:absolute;left:11%;top:44%;transform:translateZ(-90px);"><span style="display:inline-block;font:600 20px 'JetBrains Mono',monospace;color:rgba(0,229,160,0.17);animation:floatY 6.5s ease-in-out infinite .4s;">let x = 0x1F</span></span>
+      <span style="position:absolute;left:59%;top:39%;transform:translateZ(-300px);"><span style="display:inline-block;font:600 22px 'JetBrains Mono',monospace;color:rgba(255,255,255,0.11);animation:floatY 8.5s ease-in-out infinite 1.2s;">// TODO</span></span>
+      <span style="position:absolute;left:32%;top:29%;transform:translateZ(-200px);"><span style="display:inline-block;font:700 26px 'JetBrains Mono',monospace;color:rgba(167,139,250,0.19);animation:floatY 7.8s ease-in-out infinite .2s;">&gt;_</span></span>
+      <span style="position:absolute;left:90%;top:55%;transform:translateZ(-120px);"><span style="display:inline-block;font:600 18px 'JetBrains Mono',monospace;color:rgba(34,211,238,0.19);animation:floatY 6s ease-in-out infinite .7s;">SwiftUI</span></span>
+      <span style="position:absolute;left:4%;top:83%;transform:translateZ(-380px);"><span style="display:inline-block;font:700 34px 'JetBrains Mono',monospace;color:rgba(0,229,160,0.15);animation:floatY 9.5s ease-in-out infinite;">[ ]</span></span>
+      <span style="position:absolute;left:50%;top:85%;transform:translateZ(-220px);"><span style="display:inline-block;font:600 20px 'JetBrains Mono',monospace;color:rgba(255,255,255,0.13);animation:floatY 7.2s ease-in-out infinite .5s;">{ id: 0 }</span></span>
+      <span style="position:absolute;left:80%;top:7%;transform:translateZ(-150px);"><span style="display:inline-block;font:600 22px 'JetBrains Mono',monospace;color:rgba(167,139,250,0.17);animation:floatY 8.2s ease-in-out infinite 1s;">#define</span></span>
+      <span style="position:absolute;left:40%;top:62%;transform:translateZ(-470px);"><span style="display:inline-block;font:700 28px 'JetBrains Mono',monospace;color:rgba(255,255,255,0.10);animation:floatY 11s ease-in-out infinite;">( )</span></span>
+      <span style="position:absolute;left:26%;top:54%;transform:translateZ(-280px);"><span style="display:inline-block;width:40px;height:74px;border:2px solid rgba(34,211,238,0.30);border-radius:9px;animation:floatY 8s ease-in-out infinite .8s;"></span></span>
+      <span style="position:absolute;left:66%;top:17%;transform:translateZ(-100px);"><span style="display:inline-block;width:54px;height:30px;border:2px solid rgba(0,229,160,0.30);border-radius:15px;position:relative;animation:floatY 6.8s ease-in-out infinite .35s;"><span style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,229,160,0.38);"></span></span></span>
+      <span style="position:absolute;left:82%;top:64%;transform:translateZ(-340px);"><span style="display:inline-block;position:relative;width:78px;height:78px;transform-style:preserve-3d;animation:spin3d 22s linear infinite;"><span style="position:absolute;inset:0;border:1px solid rgba(34,211,238,0.30);transform:translateZ(39px);"></span><span style="position:absolute;inset:0;border:1px solid rgba(34,211,238,0.30);transform:rotateY(180deg) translateZ(39px);"></span><span style="position:absolute;inset:0;border:1px solid rgba(0,229,160,0.27);transform:rotateY(90deg) translateZ(39px);"></span><span style="position:absolute;inset:0;border:1px solid rgba(0,229,160,0.27);transform:rotateY(-90deg) translateZ(39px);"></span><span style="position:absolute;inset:0;border:1px solid rgba(167,139,250,0.27);transform:rotateX(90deg) translateZ(39px);"></span><span style="position:absolute;inset:0;border:1px solid rgba(167,139,250,0.27);transform:rotateX(-90deg) translateZ(39px);"></span></span></span>
+    </div>
+  </div>
+
+  <!-- ===== NAV ===== -->
+  <nav style="position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:16px 40px;backdrop-filter:blur(14px);background:rgba(7,7,11,0.55);border-bottom:1px solid rgba(255,255,255,0.06);">
+    <a href="#top" style="display:flex;align-items:center;gap:10px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-0.5px;">
+      <span style="display:grid;place-items:center;width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,#00e5a0,#22d3ee);color:#07070b;font-weight:700;">N</span>
+      Nobin<span style="color:#00e5a0;">.</span>
+    </a>
+    <div class="nav-links" style="display:flex;align-items:center;gap:32px;font-size:14px;font-weight:500;color:#9a9aab;">
+      <a href="#about" style="transition:color .2s;" style-hover="color:#fff;">About</a>
+      <a href="#skills" style="transition:color .2s;" style-hover="color:#fff;">Skills</a>
+      <a href="#experience" style="transition:color .2s;" style-hover="color:#fff;">Experience</a>
+      <a href="#work" style="transition:color .2s;" style-hover="color:#fff;">Work</a>
+      <a href="#contact" style="transition:color .2s;" style-hover="color:#fff;">Contact</a>
+    </div>
+    <a href="assets/Nobin_Nepolian_Resume.pdf" download style="display:flex;align-items:center;gap:8px;padding:10px 18px;border-radius:10px;background:rgba(0,229,160,0.1);border:1px solid rgba(0,229,160,0.3);color:#00e5a0;font-size:13px;font-weight:600;font-family:'JetBrains Mono',monospace;transition:all .2s;" style-hover="background:#00e5a0;color:#07070b;box-shadow:0 0 26px rgba(0,229,160,0.4);">↓ Resume</a>
+  </nav>
+
+  <!-- ===== CINEMATIC HERO ===== -->
+  <header id="top" style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:110px 24px 70px;background:radial-gradient(1100px 720px at 50% 18%, #0c1826 0%, #070c14 55%, #04060a 100%);">
+    <canvas id="hero-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;opacity:.65;"></canvas>
+
+    <div id="hero-grid" style="position:absolute;left:50%;bottom:-12%;width:260%;height:60%;transform:translateX(-50%) perspective(620px) rotateX(71deg);transform-origin:bottom center;background-image:linear-gradient(rgba(34,211,238,0.16) 1px,transparent 1px),linear-gradient(90deg,rgba(34,211,238,0.16) 1px,transparent 1px);background-size:60px 60px;animation:gridmove 3s linear infinite;-webkit-mask-image:linear-gradient(to top,#000 0%,transparent 72%);mask-image:linear-gradient(to top,#000 0%,transparent 72%);z-index:0;pointer-events:none;"></div>
+
+    <div id="hero-ripples" style="position:absolute;left:50%;top:50%;z-index:0;pointer-events:none;color:var(--scene,#22d3ee);">
+      <span style="position:absolute;left:0;top:0;width:320px;height:320px;border:1.5px solid currentColor;border-radius:50%;transform:translate(-50%,-50%);animation:ripple 4s ease-out infinite;"></span>
+      <span style="position:absolute;left:0;top:0;width:320px;height:320px;border:1.5px solid currentColor;border-radius:50%;transform:translate(-50%,-50%);animation:ripple 4s ease-out infinite;animation-delay:1s;"></span>
+      <span style="position:absolute;left:0;top:0;width:320px;height:320px;border:1.5px solid currentColor;border-radius:50%;transform:translate(-50%,-50%);animation:ripple 4s ease-out infinite;animation-delay:2s;"></span>
+      <span style="position:absolute;left:0;top:0;width:320px;height:320px;border:1.5px solid currentColor;border-radius:50%;transform:translate(-50%,-50%);animation:ripple 4s ease-out infinite;animation-delay:3s;"></span>
+    </div>
+
+    <div class="hero-row" style="position:relative;z-index:3;max-width:1200px;margin:0 auto;width:100%;display:flex;align-items:center;justify-content:space-between;gap:40px;">
+      <div class="hero-copy" style="flex:1;display:flex;flex-direction:column;align-items:flex-start;max-width:560px;">
+        <div id="hero-eyebrow" style="display:inline-flex;align-items:center;gap:9px;padding:7px 15px;border-radius:999px;border:1px solid var(--scene,#22d3ee);background:rgba(34,211,238,0.06);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px;color:var(--scene,#22d3ee);margin-bottom:26px;transition:color .5s,border-color .5s;">iOS DEVELOPER · WEB3 ENGINEER</div>
+        <h1 id="hero-headline" class="hero-headline" style="margin:0;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:82px;line-height:0.96;letter-spacing:-2.5px;color:#fff;transition:opacity .45s cubic-bezier(.2,.7,.2,1),transform .45s cubic-bezier(.2,.7,.2,1);">Nobin<br>Nepolian</h1>
+        <p id="hero-sub" style="max-width:440px;margin:26px 0 0;font-size:17px;line-height:1.7;color:#9fb0c0;transition:opacity .45s;">Building secure, high-performance mobile apps from Dubai — SwiftUI, UIKit &amp; multi-chain Web3.</p>
+        <div style="display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;">
+          <a href="#work" style="display:flex;align-items:center;gap:9px;padding:15px 26px;border-radius:12px;background:linear-gradient(135deg,#00e5a0,#22d3ee);color:#05070b;font-weight:700;font-size:15px;box-shadow:0 8px 40px rgba(0,229,160,0.28);transition:transform .2s,box-shadow .2s;" style-hover="transform:translateY(-3px);box-shadow:0 14px 50px rgba(0,229,160,0.45);">View my work →</a>
+          <a href="assets/Nobin_Nepolian_Resume.pdf" download style="display:flex;align-items:center;gap:9px;padding:15px 26px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.14);color:#e8eef5;font-weight:600;font-size:15px;transition:all .2s;" style-hover="background:rgba(255,255,255,0.09);">↓ Resume</a>
+        </div>
+        <div id="hero-dots" style="display:flex;gap:10px;margin-top:40px;">
+          <button data-hs="0" style="width:52px;height:4px;border:none;border-radius:3px;background:#22d3ee;cursor:pointer;padding:0;transition:all .4s;"></button>
+          <button data-hs="1" style="width:34px;height:4px;border:none;border-radius:3px;background:#2a3a48;cursor:pointer;padding:0;transition:all .4s;"></button>
+          <button data-hs="2" style="width:34px;height:4px;border:none;border-radius:3px;background:#2a3a48;cursor:pointer;padding:0;transition:all .4s;"></button>
+          <button data-hs="3" style="width:34px;height:4px;border:none;border-radius:3px;background:#2a3a48;cursor:pointer;padding:0;transition:all .4s;"></button>
+        </div>
+      </div>
+
+      <div class="hero-stage-wrap" style="position:relative;width:340px;height:560px;flex-shrink:0;display:flex;align-items:center;justify-content:center;">
+        <div style="position:absolute;width:470px;height:470px;transform:rotateX(62deg);animation:arcspin 9s linear infinite;pointer-events:none;">
+          <div style="position:absolute;inset:0;border-radius:50%;border:2px solid transparent;border-top-color:var(--scene,#22d3ee);border-right-color:var(--scene,#22d3ee);filter:drop-shadow(0 0 9px var(--scene,#22d3ee));opacity:.85;"></div>
+        </div>
+        <div style="position:absolute;width:550px;height:550px;transform:rotateX(58deg);animation:arcspin2 14s linear infinite;pointer-events:none;">
+          <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid transparent;border-bottom-color:rgba(0,229,160,0.5);filter:drop-shadow(0 0 7px rgba(0,229,160,0.5));"></div>
+        </div>
+
+        <div id="hero-phone-float" style="position:relative;animation:floatY 5s ease-in-out infinite;will-change:transform;">
+          <div id="hero-phone" style="position:relative;width:262px;height:536px;transform-style:preserve-3d;will-change:transform;">
+            <div style="position:absolute;inset:0;border-radius:42px;background:linear-gradient(120deg,#0c1018,#05070b);transform:translateZ(-18px);box-shadow:0 55px 90px rgba(0,0,0,.7);"></div>
+            <div style="position:relative;width:100%;height:100%;border-radius:42px;padding:11px;background:linear-gradient(150deg,#1c2532,#0a0e16);box-shadow:0 0 0 2px rgba(255,255,255,0.06),0 0 64px var(--scene,#22d3ee);">
+              <div style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:82px;height:22px;background:#05070b;border-radius:12px;z-index:6;"></div>
+              <div id="hero-screen" style="position:relative;width:100%;height:100%;border-radius:32px;overflow:hidden;background:#0a0e16;transition:opacity .25s ease;color:var(--scene,#22d3ee);"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;color:#5a6a78;font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:1px;">SCROLL<div style="width:1px;height:32px;background:linear-gradient(var(--scene,#22d3ee),transparent);animation:bob 1.8s ease-in-out infinite;"></div></div>
+  </header>
+
+  <!-- ===== STATS STRIP ===== -->
+  <div style="position:relative;z-index:2;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.012);">
+    <div style="max-width:1100px;margin:0 auto;display:flex;justify-content:space-around;flex-wrap:wrap;gap:20px;padding:30px 40px;">
+      <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;background:linear-gradient(135deg,#00e5a0,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;" data-count="4" data-suffix="+">0+</div><div style="font-size:12.5px;color:#7a8a98;margin-top:4px;font-family:'JetBrains Mono',monospace;">Years Exp</div></div>
+      <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;background:linear-gradient(135deg,#00e5a0,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;" data-count="8" data-suffix="+">0+</div><div style="font-size:12.5px;color:#7a8a98;margin-top:4px;font-family:'JetBrains Mono',monospace;">Apps Shipped</div></div>
+      <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;background:linear-gradient(135deg,#00e5a0,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;" data-count="99.9" data-decimals="1" data-suffix="%">0%</div><div style="font-size:12.5px;color:#7a8a98;margin-top:4px;font-family:'JetBrains Mono',monospace;">Crash-Free</div></div>
+      <div style="text-align:center;"><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:40px;background:linear-gradient(135deg,#00e5a0,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;" data-count="7" data-suffix="+">0+</div><div style="font-size:12.5px;color:#7a8a98;margin-top:4px;font-family:'JetBrains Mono',monospace;">Chains</div></div>
+    </div>
+  </div>
+
+  <!-- ===== MARQUEE ===== -->
+  <div style="position:relative;z-index:2;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0;background:rgba(255,255,255,0.012);">
+    <div style="display:flex;width:max-content;animation:marq 28s linear infinite;gap:0;">
+      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#2a2a38;white-space:nowrap;">
+        <span>Swift</span><span style="color:#00e5a0;">✦</span><span>SwiftUI</span><span style="color:#00e5a0;">✦</span><span>UIKit</span><span style="color:#00e5a0;">✦</span><span>React Native</span><span style="color:#00e5a0;">✦</span><span>WalletConnect</span><span style="color:#00e5a0;">✦</span><span>CryptoKit</span><span style="color:#00e5a0;">✦</span><span>Combine</span><span style="color:#00e5a0;">✦</span><span>Web3</span><span style="color:#00e5a0;">✦</span>
+      </div>
+      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#2a2a38;white-space:nowrap;">
+        <span>Swift</span><span style="color:#00e5a0;">✦</span><span>SwiftUI</span><span style="color:#00e5a0;">✦</span><span>UIKit</span><span style="color:#00e5a0;">✦</span><span>React Native</span><span style="color:#00e5a0;">✦</span><span>WalletConnect</span><span style="color:#00e5a0;">✦</span><span>CryptoKit</span><span style="color:#00e5a0;">✦</span><span>Combine</span><span style="color:#00e5a0;">✦</span><span>Web3</span><span style="color:#00e5a0;">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:140px 40px;">
+    <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:50px;">01 — ABOUT</div>
+    <div class="two-col" style="display:grid;grid-template-columns:1.45fr 1fr;gap:64px;align-items:start;">
+      <div data-reveal>
+        <h2 style="margin:0 0 28px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(30px,4vw,46px);line-height:1.15;letter-spacing:-1px;">I craft mobile experiences that are <span style="color:#00e5a0;">fast</span>, <span style="color:#22d3ee;">secure</span>, and built to scale.</h2>
+        <p style="font-size:16.5px;line-height:1.8;color:#9a9aab;margin:0 0 18px;">Driven iOS Developer with deep expertise in SwiftUI, UIKit, and integrating Web3 / crypto wallet solutions. I specialize in optimizing app performance, ensuring scalability, and implementing robust security — biometric authentication, secure storage, and cryptographic key management.</p>
+        <p style="font-size:16.5px;line-height:1.8;color:#9a9aab;margin:0;">A proactive team player who thrives in Agile environments, collaborates across disciplines, and stays current with the latest in mobile development.</p>
+      </div>
+      <div data-reveal style="display:flex;flex-direction:column;gap:14px;">
+        <div id="about-photo" style="position:relative;perspective:1000px;margin-bottom:4px;">
+          <div id="about-photo-inner" style="position:relative;border-radius:20px;padding:3px;background:linear-gradient(135deg,#00e5a0,#22d3ee 55%,rgba(167,139,250,0.4));box-shadow:0 22px 60px rgba(0,229,160,0.18);transition:transform .15s ease-out;transform-style:preserve-3d;will-change:transform;">
+            <img src="assets/profile.png" alt="Nobin Nepolian" style="display:block;width:100%;height:300px;object-fit:cover;object-position:center 22%;border-radius:18px;"/>
+            <span style="position:absolute;top:11px;left:11px;width:22px;height:22px;border-top:2px solid #00e5a0;border-left:2px solid #00e5a0;border-radius:4px 0 0 0;opacity:.85;"></span>
+            <span style="position:absolute;bottom:11px;right:11px;width:22px;height:22px;border-bottom:2px solid #22d3ee;border-right:2px solid #22d3ee;border-radius:0 0 4px 0;opacity:.85;"></span>
+            <div style="position:absolute;left:12px;bottom:12px;display:flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:rgba(7,7,11,0.62);backdrop-filter:blur(8px);border:1px solid rgba(0,229,160,0.28);font-family:'JetBrains Mono',monospace;font-size:11px;color:#00e5a0;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#00e5a0;box-shadow:0 0 8px #00e5a0;animation:pulse 2s infinite;"></span>Dubai, UAE
+            </div>
+          </div>
+        </div>
+        <div style="padding:22px;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);"><div style="font-size:12px;color:#7a7a88;font-family:'JetBrains Mono',monospace;margin-bottom:6px;">CURRENTLY</div><div style="font-size:16px;font-weight:600;">iOS Mobile Engineer</div><div style="font-size:14px;color:#00e5a0;">Token 13 L.L.C · Dubai</div></div>
+        <div style="padding:22px;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);"><div style="font-size:12px;color:#7a7a88;font-family:'JetBrains Mono',monospace;margin-bottom:6px;">FOCUS</div><div style="font-size:16px;font-weight:600;">Crypto Wallets &amp; Secure iOS</div><div style="font-size:14px;color:#9a9aab;">Multi-chain · DeFi · DEX swaps</div></div>
+        <div style="padding:22px;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);"><div style="font-size:12px;color:#7a7a88;font-family:'JetBrains Mono',monospace;margin-bottom:6px;">EDUCATION</div><div style="font-size:16px;font-weight:600;">MCA · Computer Applications</div><div style="font-size:14px;color:#9a9aab;">MG University, Kerala</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SKILLS ===== -->
+  <section id="skills" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 140px;">
+    <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">02 — SKILLS</div>
+    <h2 data-reveal style="margin:0 0 50px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;">The full toolkit</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;">
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(0,229,160,0.12);color:#00e5a0;font-size:20px;">⌘</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">Languages</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Swift</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Objective-C</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">TypeScript</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">JavaScript</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">C++</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">C</span>
+        </div>
+      </div>
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(34,211,238,0.12);color:#22d3ee;font-size:20px;">▦</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">iOS &amp; UI</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">SwiftUI</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">UIKit</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Core Animation</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Combine</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Swift Concurrency</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">React Native</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">HIG</span>
+        </div>
+      </div>
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(167,139,250,0.14);color:#a78bfa;font-size:20px;">◈</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">Architecture</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">MVVM</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">MVVM-C</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">VIPER</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Clean Architecture</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">SOLID</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">DI</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Agile/Scrum</span>
+        </div>
+      </div>
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(0,229,160,0.06),rgba(255,255,255,0.01));border:1px solid rgba(0,229,160,0.18);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(0,229,160,0.14);color:#00e5a0;font-size:20px;">⛓</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">Blockchain &amp; Security</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">WalletConnect v2</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">BIP-39</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">Multi-Chain</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">CryptoKit</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">Secure Enclave</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">PBKDF2</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">SSL Pinning</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">Keychain</span><span style="padding:7px 13px;border-radius:8px;background:rgba(0,229,160,0.06);border:1px solid rgba(0,229,160,0.15);font-size:13px;color:#bdf5e3;font-family:'JetBrains Mono',monospace;">FaceID / TouchID</span>
+        </div>
+      </div>
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(34,211,238,0.12);color:#22d3ee;font-size:20px;">⇄</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">Data &amp; Networking</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Core Data</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">SwiftData</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Realm</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">SQLite</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">URLSession</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Alamofire</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">WebSockets</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">MongoDB</span>
+        </div>
+      </div>
+
+      <div data-reveal style="padding:28px;border-radius:18px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;"><span style="display:grid;place-items:center;width:40px;height:40px;border-radius:11px;background:rgba(245,158,11,0.14);color:#f59e0b;font-size:20px;">⚙</span><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:600;">Tools, CI/CD &amp; Testing</h3></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Xcode</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Git</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Fastlane</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">GitHub Actions</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Jenkins</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">Firebase</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">TestFlight</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">XCTest</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">TDD</span><span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);font-size:13px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">SPM</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== EXPERIENCE ===== -->
+  <section id="experience" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 140px;">
+    <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">03 — EXPERIENCE</div>
+    <h2 data-reveal style="margin:0 0 56px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;">Career timeline</h2>
+
+    <div style="position:relative;padding-left:34px;">
+      <div id="timeline-track" style="position:absolute;left:7px;top:6px;bottom:6px;width:2px;background:rgba(255,255,255,0.07);"></div>
+      <div id="timeline-fill" style="position:absolute;left:7px;top:6px;width:2px;height:0;background:linear-gradient(#00e5a0,#22d3ee);box-shadow:0 0 14px #00e5a0;border-radius:2px;"></div>
+
+      <div data-reveal style="position:relative;margin-bottom:36px;">
+        <span style="position:absolute;left:-34px;top:6px;width:16px;height:16px;border-radius:50%;background:#00e5a0;box-shadow:0 0 0 5px rgba(0,229,160,0.15),0 0 22px rgba(0,229,160,0.6);"></span>
+        <div style="padding:26px 28px;border-radius:18px;background:linear-gradient(180deg,rgba(0,229,160,0.06),rgba(255,255,255,0.012));border:1px solid rgba(0,229,160,0.18);">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:6px;"><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;">iOS Mobile Engineer</h3><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#00e5a0;padding:4px 10px;border-radius:6px;background:rgba(0,229,160,0.1);">Jul 2025 — Present</span></div>
+          <div style="font-size:15px;color:#22d3ee;font-weight:600;margin-bottom:16px;">Token 13 L.L.C · Dubai, UAE</div>
+          <ul style="margin:0;padding-left:18px;color:#9a9aab;font-size:14.5px;line-height:1.75;">
+            <li>Architected a comprehensive cryptocurrency wallet from scratch — real-time market tracking and secure asset transfers.</li>
+            <li>Built an in-app Crypto Swap on DEX APIs, optimizing transaction routing for faster token conversion.</li>
+            <li>Implemented local AES encryption for private keys + biometric auth (FaceID/TouchID) for all sensitive operations.</li>
+            <li>Integrated WalletConnect v2 for web3 dApp connectivity; maintained a 99.9% crash-free rate post-deployment.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-reveal style="position:relative;margin-bottom:36px;">
+        <span style="position:absolute;left:-34px;top:6px;width:16px;height:16px;border-radius:50%;background:#22d3ee;box-shadow:0 0 0 5px rgba(34,211,238,0.12);"></span>
+        <div style="padding:26px 28px;border-radius:18px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:6px;"><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;">Software Engineer</h3><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9a9aab;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.05);">Aug 2024 — Apr 2025</span></div>
+          <div style="font-size:15px;color:#22d3ee;font-weight:600;margin-bottom:16px;">Armia Systems · Kochi, Kerala</div>
+          <ul style="margin:0;padding-left:18px;color:#9a9aab;font-size:14.5px;line-height:1.75;">
+            <li>Led development of an iOS app from the ground up, integrating libraries/SDKs and releasing on the App Store.</li>
+            <li>Conducted R&amp;D to integrate cutting-edge tech including React Native for cross-platform solutions.</li>
+            <li>Optimized code for performance and ensured adherence to iOS / React Native best practices.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-reveal style="position:relative;margin-bottom:36px;">
+        <span style="position:absolute;left:-34px;top:6px;width:16px;height:16px;border-radius:50%;background:#a78bfa;box-shadow:0 0 0 5px rgba(167,139,250,0.12);"></span>
+        <div style="padding:26px 28px;border-radius:18px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:6px;"><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;">Junior Software Engineer</h3><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9a9aab;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.05);">Feb 2023 — Aug 2024</span></div>
+          <div style="font-size:15px;color:#22d3ee;font-weight:600;margin-bottom:16px;">Armia Systems · Kochi, Kerala</div>
+          <ul style="margin:0;padding-left:18px;color:#9a9aab;font-size:14.5px;line-height:1.75;">
+            <li>Developed and maintained iOS applications, contributing to feature enhancements and bug fixes.</li>
+            <li>Collaborated with cross-functional teams to deliver projects on time and aligned with client requirements.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div data-reveal style="position:relative;">
+        <span style="position:absolute;left:-34px;top:6px;width:16px;height:16px;border-radius:50%;background:#5a5a68;box-shadow:0 0 0 5px rgba(255,255,255,0.04);"></span>
+        <div style="padding:26px 28px;border-radius:18px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);">
+          <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:6px;"><h3 style="margin:0;font-family:'Space Grotesk',sans-serif;font-size:21px;font-weight:600;">Junior Software Engineer Trainee</h3><span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#9a9aab;padding:4px 10px;border-radius:6px;background:rgba(255,255,255,0.05);">Aug 2022 — Feb 2023</span></div>
+          <div style="font-size:15px;color:#22d3ee;font-weight:600;margin-bottom:16px;">Armia Systems · Kochi, Kerala</div>
+          <ul style="margin:0;padding-left:18px;color:#9a9aab;font-size:14.5px;line-height:1.75;">
+            <li>Gained hands-on iOS development experience focused on Swift and Xcode.</li>
+            <li>Contributed to testing and debugging, and supported senior developers on key features.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== PROJECTS / WORK ===== -->
+  <section id="work" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 140px;">
+    <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">04 — SELECTED WORK</div>
+    <h2 data-reveal style="margin:0 0 14px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;">Apps I've shipped</h2>
+    <p data-reveal style="margin:0 0 38px;color:#9a9aab;font-size:16px;max-width:560px;">Tap a project to preview it. Each one was built end-to-end with a focus on performance and security.</p>
+
+    <div data-reveal style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:44px;">
+      <button id="chip-0">TokenB</button>
+      <button id="chip-1">Rags2Riches</button>
+      <button id="chip-2">TaskRabbitClone</button>
+      <button id="chip-3">MultiCart</button>
+      <button id="chip-4">ShowReel / B Cubed</button>
+      <button id="chip-5">Shelter</button>
+    </div>
+
+    <div class="showcase-grid" id="showcase" style="display:grid;grid-template-columns:1fr 360px;gap:60px;align-items:center;">
+
+      <!-- detail -->
+      <div>
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+          <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:60px;line-height:1;color:rgba(255,255,255,0.07);">{{ active.num }}</span>
+          <div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--app);letter-spacing:1px;">{{ active.category }}</div>
+            <h3 style="margin:2px 0 0;font-family:'Space Grotesk',sans-serif;font-size:32px;font-weight:700;letter-spacing:-1px;">{{ active.name }}</h3>
+          </div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#7a7a88;margin-bottom:22px;">{{ active.period }}</div>
+        <ul style="margin:0 0 26px;padding-left:18px;color:#b4b4c0;font-size:15.5px;line-height:1.8;">
+          <sc-for list="{{ active.desc }}" as="d" hint-placeholder-count="3">
+            <li>{{ d }}</li>
+          </sc-for>
+        </ul>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px;">
+          <sc-for list="{{ active.tech }}" as="t" hint-placeholder-count="4">
+            <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);font-size:12.5px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">{{ t }}</span>
+          </sc-for>
+        </div>
+        <a href="https://github.com/NobinNepolian" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#00e5a0;font-family:'JetBrains Mono',monospace;transition:gap .2s;" style-hover="gap:14px;">View GitHub →</a>
+      </div>
+
+      <!-- phone -->
+      <div id="phone-wrap" style="perspective:1400px;display:flex;justify-content:center;">
+        <div id="phone" style="{{ phoneStyle }}">
+          <div style="position:relative;width:300px;height:620px;border-radius:46px;padding:13px;background:linear-gradient(160deg,#1a1a24,#0c0c12);box-shadow:0 40px 90px rgba(0,0,0,0.6),0 0 0 2px rgba(255,255,255,0.05),0 0 60px var(--app);transition:box-shadow .4s;">
+            <div style="position:absolute;top:24px;left:50%;transform:translateX(-50%);width:96px;height:26px;background:#07070b;border-radius:14px;z-index:5;"></div>
+            <div style="position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--app) 22%, #0c0c12), #0a0a10 60%);display:flex;flex-direction:column;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px 8px;font-size:12px;font-family:'JetBrains Mono',monospace;color:#cfd0da;font-weight:600;"><span>9:41</span><span style="letter-spacing:1px;">●●● ▮</span></div>
+              <div style="padding:14px 22px 0;display:flex;align-items:center;gap:12px;">
+                <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--app);color:#07070b;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;box-shadow:0 8px 24px var(--app);">{{ active.initial }}</span>
+                <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#fff;">{{ active.name }}</div><div style="font-size:11px;color:#8a8a99;font-family:'JetBrains Mono',monospace;">{{ active.category }}</div></div>
+              </div>
+              <div style="margin:18px 18px 0;border-radius:20px;padding:22px 18px;background:linear-gradient(140deg,var(--app),color-mix(in srgb, var(--app) 30%, #07070b));position:relative;overflow:hidden;">
+                <span style="position:absolute;right:-14px;bottom:-26px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:120px;color:rgba(7,7,11,0.12);line-height:1;">{{ active.initial }}</span>
+                <div style="position:relative;font-size:11px;font-family:'JetBrains Mono',monospace;color:rgba(7,7,11,0.7);font-weight:600;margin-bottom:6px;">FEATURED</div>
+                <div style="position:relative;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:#07070b;line-height:1.2;">{{ active.tagline }}</div>
+              </div>
+              <div style="padding:18px;display:flex;flex-direction:column;gap:10px;flex:1;">
+                <sc-for list="{{ active.features }}" as="f" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:13px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);">
+                    <span style="display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:color-mix(in srgb, var(--app) 22%, transparent);color:var(--app);font-size:14px;font-weight:700;">›</span>
+                    <span style="font-size:13px;color:#dcdce4;font-weight:500;flex:1;">{{ f }}</span>
+                    <span style="width:8px;height:8px;border-radius:50%;background:var(--app);"></span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-around;align-items:center;padding:14px 22px 22px;border-top:1px solid rgba(255,255,255,0.05);">
+                <span style="width:24px;height:5px;border-radius:3px;background:var(--app);"></span>
+                <span style="width:5px;height:5px;border-radius:50%;background:#4a4a58;"></span>
+                <span style="width:5px;height:5px;border-radius:50%;background:#4a4a58;"></span>
+                <span style="width:5px;height:5px;border-radius:50%;background:#4a4a58;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 120px;">
+    <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">05 — EDUCATION</div>
+    <h2 data-reveal style="margin:0 0 50px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;">Academic background</h2>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+      <div data-reveal style="padding:32px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#00e5a0;margin-bottom:14px;">2020 — 2022</div>
+        <h3 style="margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;">Master of Computer Applications</h3>
+        <div style="color:#9a9aab;font-size:14.5px;line-height:1.6;">Kristu Jyoti College of Management and Technology<br>MG University · Kottayam, Kerala</div>
+      </div>
+      <div data-reveal style="padding:32px;border-radius:20px;background:linear-gradient(180deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.07);">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#22d3ee;margin-bottom:14px;">2017 — 2020</div>
+        <h3 style="margin:0 0 8px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;">Bachelor of Computer Applications</h3>
+        <div style="color:#9a9aab;font-size:14.5px;line-height:1.6;">University Institute of Technology<br>Kerala University · Kottarakkara, Kerala</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 130px;">
+    <div data-reveal style="position:relative;border-radius:30px;overflow:hidden;padding:clamp(40px,6vw,80px);background:linear-gradient(150deg,rgba(0,229,160,0.1),rgba(34,211,238,0.05),rgba(255,255,255,0.012));border:1px solid rgba(0,229,160,0.18);text-align:center;">
+      <div style="position:absolute;inset:0;background:radial-gradient(600px 300px at 50% -20%, rgba(0,229,160,0.18), transparent 70%);pointer-events:none;"></div>
+      <div style="position:relative;">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">06 — CONTACT</div>
+        <h2 style="margin:0 0 16px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,5vw,58px);letter-spacing:-2px;line-height:1.05;">Let's build something<br><span style="background:linear-gradient(100deg,#00e5a0,#22d3ee);-webkit-background-clip:text;background-clip:text;color:transparent;">exceptional</span> together.</h2>
+        <p style="margin:0 auto 36px;max-width:480px;color:#9a9aab;font-size:16px;">Open to iOS &amp; Web3 engineering roles. Drop me a line — I usually reply within a day.</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;">
+          <a href="mailto:nobinnepolian987@gmail.com" style="display:flex;align-items:center;gap:9px;padding:15px 26px;border-radius:12px;background:linear-gradient(135deg,#00e5a0,#22d3ee);color:#07070b;font-weight:700;font-size:15px;box-shadow:0 8px 36px rgba(0,229,160,0.3);transition:transform .2s;" style-hover="transform:translateY(-3px);">✉ Email me</a>
+          <a href="assets/Nobin_Nepolian_Resume.pdf" download style="display:flex;align-items:center;gap:9px;padding:15px 26px;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.14);color:#e8e8ee;font-weight:600;font-size:15px;transition:all .2s;" style-hover="background:rgba(255,255,255,0.08);">↓ Download CV</a>
+        </div>
+        <div style="display:flex;gap:clamp(20px,4vw,48px);justify-content:center;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:13.5px;">
+          <a href="mailto:nobinnepolian987@gmail.com" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">nobinnepolian987@gmail.com</a>
+          <a href="tel:+971509524569" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">+971 50 952 4569</a>
+          <a href="https://linkedin.com/in/nobin-nepolian" target="_blank" rel="noopener" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">LinkedIn ↗</a>
+          <a href="https://github.com/NobinNepolian" target="_blank" rel="noopener" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">GitHub ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-top:50px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.06);font-size:13px;color:#5a5a68;font-family:'JetBrains Mono',monospace;">
+      <span>© 2026 Nobin Nepolian</span>
+      <span>Designed &amp; built with precision · Dubai, UAE</span>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { active: 0 };
+
+  data() {
+    return [
+      { name: "TokenB", num: "01", category: "Web3 · Finance", color: "#00e5a0", initial: "TB",
+        period: "Jul 2025 — Present  ·  SwiftUI, Swift",
+        tagline: "Self-custody multi-chain wallet",
+        tech: ["SwiftUI", "Swift", "WalletConnect v2", "CryptoKit", "DEX APIs"],
+        features: ["Live market tracking", "In-app DEX swap", "WalletConnect v2", "FaceID + AES vault"],
+        desc: [
+          "Architected a comprehensive iOS crypto wallet from scratch — track markets, manage assets, send & receive securely.",
+          "Engineered an in-app Crypto Swap on DEX APIs and integrated WalletConnect v2 for seamless dApp interaction.",
+          "Secured assets with AES encryption and biometric (FaceID/TouchID) transaction authorization; 99.9% crash-free."
+        ] },
+      { name: "Rags2Riches", num: "02", category: "Social · Contests", color: "#f59e0b", initial: "R2",
+        period: "May 2024 — Apr 2025  ·  Cocoa Touch, Swift",
+        tagline: "Share ideas, win contests",
+        tech: ["Swift", "Alamofire", "AWS", "Socket.io", "XCTest"],
+        features: ["Idea uploads", "Live contests", "Realtime sockets", "Branch deep links"],
+        desc: [
+          "Built from scratch — users upload ideas and participate in contests.",
+          "Integrated Alamofire, AWS, Branch and Sockets for seamless realtime functionality.",
+          "Added XCTest unit testing and comprehensive bug fixes for enhanced stability."
+        ] },
+      { name: "TaskRabbitClone", num: "03", category: "Marketplace · Cross-platform", color: "#22d3ee", initial: "TR",
+        period: "Mar — Apr 2024  ·  React Native",
+        tagline: "Discover & hire local services",
+        tech: ["React Native", "TypeScript", "iOS", "Android"],
+        features: ["Service discovery", "Category browse", "Optimized rendering", "iOS + Android"],
+        desc: [
+          "Built a React Native marketplace from the ground up to discover and hire services across categories.",
+          "Optimized component rendering and state management for smoother transitions.",
+          "Reduced memory overhead across both platforms."
+        ] },
+      { name: "MultiCart", num: "04", category: "E-commerce", color: "#a78bfa", initial: "MC",
+        period: "Jan — Mar 2024  ·  Cocoa Touch, Swift",
+        tagline: "Buyer & seller commerce",
+        tech: ["Swift", "Cocoa Touch", "SDK"],
+        features: ["UI revamp", "Seller tools", "SDK upgrade", "Perf tuning"],
+        desc: [
+          "Revamped ~10% of the Buyer & Seller app user interface.",
+          "Contributed to upgrading the SDK, enhancing its functionality and performance."
+        ] },
+      { name: "ShowReel / B Cubed", num: "05", category: "Media", color: "#ff6b6b", initial: "SR",
+        period: "Jan — Dec 2023  ·  Cocoa Touch, Swift",
+        tagline: "Media reels experience",
+        tech: ["Swift", "Cocoa Touch"],
+        features: ["Reel UI", "Playback", "Bug fixes", "Stability"],
+        desc: [
+          "Delivered ~50% of the app's UI and functionality.",
+          "Assisted with bug fixes to enhance functionality and stability."
+        ] },
+      { name: "Shelter", num: "06", category: "Real Estate", color: "#34d399", initial: "SH",
+        period: "Sep — Dec 2022  ·  Cocoa Touch, Swift",
+        tagline: "List & find properties",
+        tech: ["Swift", "Cocoa Touch"],
+        features: ["Photo uploads", "Listings", "Property search", "Detail pages"],
+        desc: [
+          "Built from the ground up — upload property photos and details for sale.",
+          "Added a robust search feature for effortless property exploration."
+        ] }
+    ];
+  }
+
+  renderVals() {
+    const data = this.data();
+    const active = this.state.active;
+    const idle = { padding: "10px 17px", borderRadius: "999px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(255,255,255,0.02)", color: "#9a9aab", fontFamily: "'JetBrains Mono', monospace", fontSize: "13px", fontWeight: 500, cursor: "pointer", transition: "all .25s", whiteSpace: "nowrap" };
+    const act = data[active];
+    return {
+      active: act,
+      phoneStyle: { "--app": act.color }
+    };
+  }
+
+  select(i) {
+    this.paintChips(i);
+    this.setState({ active: i });
+  }
+
+  paintChips(activeArg) {
+    const colors = this.data().map((p) => p.color);
+    const active = (activeArg == null) ? this.state.active : activeArg;
+    for (let i = 0; i < colors.length; i++) {
+      const el = document.getElementById("chip-" + i);
+      if (!el) continue;
+      // base style (chips have no style attr in template, so React never touches them)
+      el.style.cssText = "padding:10px 17px;border-radius:999px;font-family:'JetBrains Mono',monospace;font-size:13px;cursor:pointer;white-space:nowrap;";
+      if (i === active) {
+        el.style.background = colors[i];
+        el.style.color = "#07070b";
+        el.style.border = "1px solid " + colors[i];
+        el.style.fontWeight = "700";
+        el.style.boxShadow = "0 0 26px " + colors[i] + "66";
+      } else {
+        el.style.background = "rgba(255,255,255,0.02)";
+        el.style.color = "#9a9aab";
+        el.style.border = "1px solid rgba(255,255,255,0.1)";
+        el.style.fontWeight = "500";
+        el.style.boxShadow = "none";
+      }
+    }
+  }
+
+  initBg3d() {
+    if (this._bg3dInit) return;
+    this._bg3dInit = true;
+    const scene = document.getElementById("bg3d-scene");
+    if (!scene) return;
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    this._bg3dMouse = (e) => { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; };
+    window.addEventListener("mousemove", this._bg3dMouse, { passive: true });
+    const loop = () => {
+      cx += (mx - cx) * 0.05;
+      cy += (my - cy) * 0.05;
+      const pos = Math.max(window.scrollY || 0, -document.documentElement.getBoundingClientRect().top, 0);
+      const ty = -pos * 0.06;
+      scene.style.transform = "translateY(" + ty.toFixed(1) + "px) rotateX(" + (-cy * 8 - pos * 0.008).toFixed(2) + "deg) rotateY(" + (cx * 11).toFixed(2) + "deg)";
+      this._bg3dRaf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  componentDidMount() {
+    this.initBg3d();
+    this.initHero();
+    this.paintChips(0);
+    // about photo 3D tilt
+    const ap = document.getElementById("about-photo");
+    const api = document.getElementById("about-photo-inner");
+    if (ap && api) {
+      ap.addEventListener("mousemove", (e) => {
+        const r = ap.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        api.style.transform = "rotateY(" + (px * 12).toFixed(2) + "deg) rotateX(" + (-py * 12).toFixed(2) + "deg) translateZ(12px)";
+      });
+      ap.addEventListener("mouseleave", () => { api.style.transform = "none"; });
+    }
+    for (let i = 0; i < 6; i++) {
+      const el = document.getElementById("chip-" + i);
+      if (el) el.addEventListener("click", () => this.select(i));
+    }
+    // ---- cursor glow ----
+    if (window.matchMedia && window.matchMedia("(pointer:fine)").matches) {
+      const glow = document.createElement("div");
+      glow.style.cssText = "position:fixed;top:0;left:0;width:340px;height:340px;border-radius:50%;pointer-events:none;z-index:9;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,229,160,0.13),rgba(34,211,238,0.05) 40%,transparent 68%);mix-blend-mode:screen;transition:opacity .3s;opacity:0;left:-999px;";
+      document.body.appendChild(glow);
+      this._glow = glow;
+      let tx = 0, ty = 0, cx = 0, cy = 0, shown = false;
+      this._onMove = (e) => { tx = e.clientX; ty = e.clientY; if (!shown) { shown = true; glow.style.opacity = "1"; } };
+      window.addEventListener("mousemove", this._onMove);
+      const tick = () => { cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12; glow.style.left = cx + "px"; glow.style.top = cy + "px"; this._cur = requestAnimationFrame(tick); };
+      tick();
+    }
+
+    // ---- hero particle network ----
+    const cv = document.getElementById("hero-canvas");
+    if (cv) {
+      const ctx = cv.getContext("2d");
+      let W, H, nodes = [], mouse = { x: -9999, y: -9999 };
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const resize = () => {
+        const r = cv.getBoundingClientRect();
+        W = r.width; H = r.height;
+        cv.width = W * DPR; cv.height = H * DPR;
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+        const count = Math.min(78, Math.floor(W * H / 14000));
+        nodes = [];
+        for (let i = 0; i < count; i++) nodes.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35 });
+      };
+      resize();
+      this._resize = resize;
+      window.addEventListener("resize", resize);
+      this._heroMove = (e) => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; };
+      cv.parentElement.addEventListener("mousemove", this._heroMove);
+      cv.parentElement.addEventListener("mouseleave", () => { mouse.x = -9999; mouse.y = -9999; });
+      const draw = () => {
+        ctx.clearRect(0, 0, W, H);
+        for (const n of nodes) {
+          n.x += n.vx; n.y += n.vy;
+          if (n.x < 0 || n.x > W) n.vx *= -1;
+          if (n.y < 0 || n.y > H) n.vy *= -1;
+          const dm = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+          if (dm < 130) { n.x += (n.x - mouse.x) / dm * 0.7; n.y += (n.y - mouse.y) / dm * 0.7; }
+        }
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const a = nodes[i], b = nodes[j];
+            const d = Math.hypot(a.x - b.x, a.y - b.y);
+            if (d < 128) {
+              ctx.strokeStyle = "rgba(0,229,160," + (1 - d / 128) * 0.22 + ")";
+              ctx.lineWidth = 1;
+              ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            }
+          }
+        }
+        for (const n of nodes) {
+          const dm = Math.hypot(n.x - mouse.x, n.y - mouse.y);
+          const near = dm < 130;
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, near ? 2.6 : 1.6, 0, Math.PI * 2);
+          ctx.fillStyle = near ? "rgba(34,211,238,0.95)" : "rgba(0,229,160,0.55)";
+          ctx.fill();
+        }
+        this._raf = requestAnimationFrame(draw);
+      };
+      draw();
+    }
+
+    // ---- scroll reveal (directional + blur + stagger) ----
+    const dirFor = (el) => {
+      if (el.closest("#skills") || el.closest("#education")) return "scale";
+      if (el.closest("#about") && el.parentElement && el.parentElement.className.indexOf("two-col") !== -1) {
+        const sibs = [...el.parentElement.children].filter((c) => c.hasAttribute("data-reveal"));
+        return sibs.indexOf(el) === 0 ? "left" : "right";
+      }
+      return "up";
+    };
+    const hideFor = (dir) => {
+      if (dir === "left") return "perspective(1100px) translateX(-70px) rotateY(24deg)";
+      if (dir === "right") return "perspective(1100px) translateX(70px) rotateY(-24deg)";
+      if (dir === "scale") return "perspective(950px) rotateX(28deg) scale(.92)";
+      return "perspective(1100px) rotateX(36deg) translateY(60px)";
+    };
+    const els = document.querySelectorAll("[data-reveal]");
+    els.forEach((el) => {
+      const dir = dirFor(el);
+      el.setAttribute("data-rdir", dir);
+      el.style.opacity = "0";
+      el.style.transform = hideFor(dir);
+      el.style.transformOrigin = (dir === "up" || dir === "scale") ? "center bottom" : "center center";
+      el.style.filter = "blur(8px)";
+      el.style.transition = "opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1), filter .9s ease";
+      el.style.willChange = "opacity, transform, filter";
+    });
+    const stagger = (el) => {
+      const sibs = el.parentElement ? [...el.parentElement.children].filter((c) => c.hasAttribute("data-reveal")) : [el];
+      return Math.max(0, sibs.indexOf(el)) * 100;
+    };
+    const revealEl = (el) => { setTimeout(() => { el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "none"; }, stagger(el)); };
+
+    // ---- count-up stats ----
+    const animateCount = (el) => {
+      const target = parseFloat(el.getAttribute("data-count"));
+      const dec = parseInt(el.getAttribute("data-decimals") || "0", 10);
+      const suffix = el.getAttribute("data-suffix") || "";
+      const dur = 1700, t0 = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = (target * e).toFixed(dec) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else el.textContent = target.toFixed(dec) + suffix;
+      };
+      requestAnimationFrame(step);
+    };
+    const counters = document.querySelectorAll("[data-count]");
+
+    // ---- card 3D tilt (skills + education) ----
+    const tiltCards = document.querySelectorAll("#skills [data-reveal], #education [data-reveal]");
+    tiltCards.forEach((card) => {
+      const enter = () => { card.style.transition = "transform .12s ease-out, opacity .85s, filter .85s"; };
+      const move = (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = "perspective(900px) rotateY(" + (px * 7) + "deg) rotateX(" + (-py * 7) + "deg) translateY(-4px)";
+      };
+      const leave = () => { card.style.transform = "none"; };
+      card.addEventListener("mouseenter", enter);
+      card.addEventListener("mousemove", move);
+      card.addEventListener("mouseleave", leave);
+    });
+
+    // ---- unified scroll-driven loop (rAF + getBoundingClientRect; robust to any scroller) ----
+    const bar = document.getElementById("scroll-bar");
+    const grid = document.getElementById("grid-bg");
+    const fill = document.getElementById("timeline-fill");
+    const track = document.getElementById("timeline-track");
+    const pending = new Set(els);
+    const pendingCounters = new Set(counters);
+    let scrolled = false;
+    // Primary trigger: native IntersectionObserver (fires correctly under host-driven scroll)
+    if ("IntersectionObserver" in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting && pending.has(en.target)) { revealEl(en.target); pending.delete(en.target); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -6% 0px" });
+      els.forEach((el) => io.observe(el));
+      const cio = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting && pendingCounters.has(en.target)) { animateCount(en.target); pendingCounters.delete(en.target); cio.unobserve(en.target); }
+        });
+      }, { threshold: 0.5 });
+      counters.forEach((el) => cio.observe(el));
+      this._io = io; this._cio = cio;
+    }
+    const fxLoop = () => {
+      const vh = window.innerHeight;
+      const docTop = document.documentElement.getBoundingClientRect().top;
+      const pos = Math.max(window.scrollY || 0, document.scrollingElement ? document.scrollingElement.scrollTop : 0, -docTop, 0);
+      if (pos > 2) scrolled = true;
+      const max = document.documentElement.scrollHeight - vh;
+      if (bar) bar.style.width = (max > 0 ? Math.min(100, (pos / max) * 100) : 0) + "%";
+      if (grid) grid.style.backgroundPosition = "0px " + (pos * 0.18) + "px, " + (pos * 0.18) + "px 0px";
+      if (fill && track) {
+        const r = track.getBoundingClientRect();
+        const prog = Math.max(0, Math.min(1, (vh * 0.55 - r.top) / r.height));
+        fill.style.height = (prog * track.clientHeight) + "px";
+      }
+      pending.forEach((el) => { if (el.getBoundingClientRect().top < vh * 0.9) { revealEl(el); pending.delete(el); } });
+      pendingCounters.forEach((el) => { if (el.getBoundingClientRect().top < vh * 0.85) { animateCount(el); pendingCounters.delete(el); } });
+      // scroll-driven 3D rotation of the project phone (+ mouse offset)
+      const ph = document.getElementById("phone");
+      const wk = document.getElementById("work");
+      if (ph && wk) {
+        const wr = wk.getBoundingClientRect();
+        const prog = Math.max(0, Math.min(1, (vh - wr.top) / (vh + wr.height)));
+        const baseY = (prog - 0.5) * 48;
+        ph.style.transformStyle = "preserve-3d";
+        ph.style.transform = "rotateY(" + (baseY + (this._phMx || 0) * 16).toFixed(2) + "deg) rotateX(" + (-(this._phMy || 0) * 14).toFixed(2) + "deg)";
+      }
+      this._fx = requestAnimationFrame(fxLoop);
+    };
+    fxLoop();
+    // safety net: if the iframe can't scroll internally, reveal everything so nothing stays hidden
+    this._safety = setTimeout(() => {
+      if (!scrolled) {
+        pending.forEach((el) => { el.style.opacity = "1"; el.style.transform = "none"; el.style.filter = "none"; });
+        pending.clear();
+        pendingCounters.forEach(animateCount); pendingCounters.clear();
+      }
+    }, 4000);
+
+    // ---- phone 3D tilt ----
+    const sc = document.getElementById("showcase");
+    const phone = document.getElementById("phone");
+    if (sc && phone) {
+      this._phMx = 0; this._phMy = 0;
+      this._tilt = (e) => {
+        const r = sc.getBoundingClientRect();
+        this._phMx = (e.clientX - r.left) / r.width - 0.5;
+        this._phMy = (e.clientY - r.top) / r.height - 0.5;
+      };
+      this._tiltReset = () => { this._phMx = 0; this._phMy = 0; };
+      phone.style.transition = "transform .2s ease-out";
+      phone.style.transformStyle = "preserve-3d";
+      sc.addEventListener("mousemove", this._tilt);
+      sc.addEventListener("mouseleave", this._tiltReset);
+    }
+  }
+
+  heroScreen(type, a) {
+    const bar = `<div style="display:flex;justify-content:space-between;align-items:center;padding:40px 20px 8px;"><span style="font:600 12px 'JetBrains Mono',monospace;color:#7a8a98;">9:41</span><span style="font:600 11px 'JetBrains Mono',monospace;color:#7a8a98;letter-spacing:1px;">5G  ▮▮▮</span></div>`;
+    const coin = (n, s, amt) => `<div style="display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:13px;background:rgba(255,255,255,0.04);"><span style="width:30px;height:30px;border-radius:50%;background:${a}26;color:${a};display:grid;place-items:center;font:700 10px 'JetBrains Mono',monospace;">${s}</span><div style="flex:1;"><div style="font:600 13px 'Space Grotesk',sans-serif;color:#fff;">${n}</div><div style="font:500 11px 'JetBrains Mono',monospace;color:#7a8a98;">${amt} ${s}</div></div><span style="width:6px;height:6px;border-radius:50%;background:${a};box-shadow:0 0 8px ${a};"></span></div>`;
+    const sec = (l) => `<div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(255,255,255,0.04);"><span style="color:${a};font:700 12px 'JetBrains Mono',monospace;">✓</span><span style="font:500 12px 'Space Grotesk',sans-serif;color:#cdd8e2;">${l}</span></div>`;
+    const prow = (l, v) => `<div style="display:flex;justify-content:space-between;padding:9px 12px;border-radius:11px;background:rgba(255,255,255,0.04);"><span style="font:500 12px 'Space Grotesk',sans-serif;color:#cdd8e2;">${l}</span><span style="font:600 12px 'JetBrains Mono',monospace;color:${a};">${v}</span></div>`;
+    let body = "";
+    if (type === "wallet") {
+      body = `<div style="padding:4px 20px 0;"><div style="font:600 12px 'JetBrains Mono',monospace;color:#7a8a98;">TokenB · Total Balance</div><div style="margin-top:7px;font:700 31px 'Space Grotesk',sans-serif;color:#fff;">$48,920<span style="color:${a};">.24</span></div><div style="margin-top:5px;font:600 12px 'JetBrains Mono',monospace;color:${a};">▲ +12.4% today</div></div>
+      <div style="margin:15px 20px;height:66px;border-radius:14px;background:linear-gradient(120deg,${a},transparent);position:relative;overflow:hidden;"><svg viewBox="0 0 200 66" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;"><path d="M0,48 C30,44 42,18 70,26 C100,34 120,8 150,16 C176,22 190,12 200,15" fill="none" stroke="#fff" stroke-width="2.5" opacity="0.9"/></svg></div>
+      <div style="padding:0 16px;display:flex;flex-direction:column;gap:9px;">${coin("Ethereum","ETH","12.4")}${coin("Bitcoin","BTC","0.82")}${coin("Solana","SOL","340")}</div>`;
+    } else if (type === "secure") {
+      body = `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 22px;">
+        <div style="width:92px;height:104px;background:linear-gradient(160deg,${a},transparent);clip-path:polygon(50% 0,100% 18%,100% 60%,50% 100%,0 60%,0 18%);display:grid;place-items:center;box-shadow:0 0 44px ${a}66;"><div style="width:24px;height:13px;border-left:4px solid #05070b;border-bottom:4px solid #05070b;transform:translateY(-4px) rotate(-45deg);"></div></div>
+        <div style="font:700 18px 'Space Grotesk',sans-serif;color:#fff;">Face ID Secured</div>
+        <div style="font:500 11px 'JetBrains Mono',monospace;color:#7a8a98;text-align:center;">AES-256 · Secure Enclave · Keychain</div>
+        <div style="display:flex;flex-direction:column;gap:8px;width:100%;">${sec("Biometric unlock")}${sec("Encrypted key vault")}${sec("SSL certificate pinning")}</div></div>`;
+    } else if (type === "perf") {
+      const hs = [38, 54, 46, 66, 58, 78, 70, 90];
+      const bars = hs.map((h) => `<div style="flex:1;height:${h * 1.3}px;border-radius:5px 5px 0 0;background:linear-gradient(${a},${a}22);"></div>`).join("");
+      body = `<div style="padding:4px 20px 0;"><div style="font:600 12px 'JetBrains Mono',monospace;color:#7a8a98;">Crash-free rate</div><div style="margin-top:5px;font:700 40px 'Space Grotesk',sans-serif;color:#fff;">99.9<span style="color:${a};">%</span></div></div>
+      <div style="display:flex;align-items:flex-end;gap:7px;height:130px;padding:20px 22px 6px;">${bars}</div>
+      <div style="padding:6px 16px 20px;display:flex;flex-direction:column;gap:8px;">${prow("Launch time","0.4s")}${prow("Memory","Optimized")}${prow("Coverage","TDD · XCTest")}</div>`;
+    } else {
+      body = `<div style="padding:4px 18px 0;"><div style="font:700 20px 'Space Grotesk',sans-serif;color:#fff;">Components</div><div style="font:500 11px 'JetBrains Mono',monospace;color:#7a8a98;margin-top:2px;">SwiftUI · Human Interface Guidelines</div></div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:11px;flex:1;">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;border-radius:13px;background:rgba(255,255,255,0.04);"><span style="font:600 13px 'Space Grotesk',sans-serif;color:#fff;">Dark Mode</span><div style="width:44px;height:26px;border-radius:13px;background:${a};position:relative;box-shadow:0 0 14px ${a}88;"><div style="position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:#fff;"></div></div></div>
+        <div style="padding:12px 14px;border-radius:13px;background:rgba(255,255,255,0.04);"><div style="font:600 12px 'Space Grotesk',sans-serif;color:#fff;margin-bottom:9px;">Volume</div><div style="height:5px;border-radius:3px;background:rgba(255,255,255,0.12);position:relative;"><div style="position:absolute;left:0;top:0;height:100%;width:68%;border-radius:3px;background:${a};"></div><div style="position:absolute;left:65%;top:50%;transform:translate(-50%,-50%);width:15px;height:15px;border-radius:50%;background:#fff;box-shadow:0 0 10px ${a};"></div></div></div>
+        <div style="display:flex;gap:5px;padding:5px;border-radius:12px;background:rgba(255,255,255,0.05);"><div style="flex:1;text-align:center;padding:8px 0;border-radius:9px;background:${a};color:#05070b;font:700 12px 'Space Grotesk',sans-serif;">Day</div><div style="flex:1;text-align:center;padding:8px 0;font:600 12px 'Space Grotesk',sans-serif;color:#9fb0c0;">Week</div><div style="flex:1;text-align:center;padding:8px 0;font:600 12px 'Space Grotesk',sans-serif;color:#9fb0c0;">Month</div></div>
+        <div style="margin-top:auto;text-align:center;padding:13px;border-radius:13px;background:linear-gradient(135deg,${a},${a}99);color:#05070b;font:700 14px 'Space Grotesk',sans-serif;box-shadow:0 8px 26px ${a}55;">Continue</div></div>`;
+    }
+    return `<div style="height:100%;display:flex;flex-direction:column;">${bar}${body}</div>`;
+  }
+
+  heroStates() {
+    return [
+      { eyebrow: "iOS DEVELOPER · WEB3 ENGINEER", head: "Nobin<br>Nepolian", sub: "Building secure, high-performance mobile apps from Dubai — SwiftUI, UIKit & multi-chain Web3.", accent: "#00e5a0", rotY: -16, screen: this.heroScreen("wallet", "#00e5a0") },
+      { eyebrow: "01 · SECURITY", head: "Engineered<br>for trust.", sub: "Multi-chain wallets secured with AES, Secure Enclave and biometric authentication.", accent: "#22d3ee", rotY: 13, screen: this.heroScreen("secure", "#22d3ee") },
+      { eyebrow: "02 · PERFORMANCE", head: "Built for<br>performance.", sub: "99.9% crash-free in production through profiling, testing and relentless optimization.", accent: "#34d399", rotY: -12, screen: this.heroScreen("perf", "#34d399") },
+      { eyebrow: "03 · CRAFT", head: "Crafted with<br>SwiftUI.", sub: "Native, pixel-perfect interfaces that follow Apple's Human Interface Guidelines.", accent: "#a78bfa", rotY: 18, screen: this.heroScreen("craft", "#a78bfa") }
+    ];
+  }
+
+  initHero() {
+    // guard against double-invocation (double mount / StrictMode) which would
+    // spawn competing autoplay loops that fight over opacity
+    if (this._heroInit) return;
+    this._heroInit = true;
+    if (this._heroTimer) clearInterval(this._heroTimer);
+    if (this._heroRaf) cancelAnimationFrame(this._heroRaf);
+    const header = document.getElementById("top");
+    const headline = document.getElementById("hero-headline");
+    const eyebrow = document.getElementById("hero-eyebrow");
+    const sub = document.getElementById("hero-sub");
+    const screen = document.getElementById("hero-screen");
+    const phone = document.getElementById("hero-phone");
+    const dots = [...document.querySelectorAll("#hero-dots button")];
+    if (!header || !phone || !screen) return;
+    const states = this.heroStates();
+    let idx = 0, mx = 0, my = 0, targetRot = states[0].rotY, curRot = states[0].rotY, curX = 0;
+
+    const apply = (i, instant) => {
+      idx = i;
+      const s = states[i];
+      header.style.setProperty("--scene", s.accent);
+      targetRot = s.rotY;
+      eyebrow.textContent = s.eyebrow;
+      if (instant) {
+        headline.innerHTML = s.head; sub.textContent = s.sub; screen.innerHTML = s.screen;
+      } else {
+        headline.style.opacity = "0"; headline.style.transform = "translateY(16px)";
+        sub.style.opacity = "0"; screen.style.opacity = "0";
+        setTimeout(() => {
+          headline.innerHTML = s.head; sub.textContent = s.sub; screen.innerHTML = s.screen;
+          headline.style.opacity = "1"; headline.style.transform = "none"; sub.style.opacity = "1"; screen.style.opacity = "1";
+        }, 250);
+      }
+      dots.forEach((d, k) => {
+        d.style.background = k === i ? s.accent : "#2a3a48";
+        d.style.width = k === i ? "52px" : "34px";
+        d.style.boxShadow = k === i ? "0 0 12px " + s.accent : "none";
+      });
+    };
+    apply(0, true);
+
+    const startTimer = () => { this._heroTimer = setInterval(() => apply((idx + 1) % states.length), 4600); };
+    startTimer();
+    dots.forEach((d) => d.addEventListener("click", () => {
+      clearInterval(this._heroTimer);
+      apply(parseInt(d.getAttribute("data-hs"), 10));
+      startTimer();
+    }));
+
+    this._heroMouse = (e) => {
+      const r = header.getBoundingClientRect();
+      mx = (e.clientX - r.left) / r.width - 0.5;
+      my = (e.clientY - r.top) / r.height - 0.5;
+    };
+    header.addEventListener("mousemove", this._heroMouse);
+
+    const loop = () => {
+      curRot += ((targetRot + mx * 16) - curRot) * 0.06;
+      curX += ((-my * 10) - curX) * 0.06;
+      phone.style.transform = "rotateY(" + curRot.toFixed(2) + "deg) rotateX(" + curX.toFixed(2) + "deg)";
+      this._heroRaf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  componentWillUnmount() {
+    if (this._cur) cancelAnimationFrame(this._cur);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._glow) this._glow.remove();
+    if (this._onMove) window.removeEventListener("mousemove", this._onMove);
+    if (this._resize) window.removeEventListener("resize", this._resize);
+    if (this._io) this._io.disconnect();
+    if (this._cio) this._cio.disconnect();
+    if (this._fx) cancelAnimationFrame(this._fx);
+    if (this._safety) clearTimeout(this._safety);
+    if (this._heroTimer) clearInterval(this._heroTimer);
+    if (this._heroRaf) cancelAnimationFrame(this._heroRaf);
+    if (this._bg3dRaf) cancelAnimationFrame(this._bg3dRaf);
+    if (this._bg3dMouse) window.removeEventListener("mousemove", this._bg3dMouse);
+  }
+}
+</script>
+</body>
+</html>
