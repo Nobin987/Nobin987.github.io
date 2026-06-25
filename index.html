@@ -150,10 +150,10 @@ button{font-family:inherit;}
   <!-- ===== MARQUEE ===== -->
   <div style="position:relative;z-index:2;overflow:hidden;border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);padding:20px 0;background:rgba(255,255,255,0.012);">
     <div style="display:flex;width:max-content;animation:marq 28s linear infinite;gap:0;">
-      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#2a2a38;white-space:nowrap;">
+      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#5a6982;white-space:nowrap;">
         <span>Swift</span><span style="color:#00e5a0;">✦</span><span>SwiftUI</span><span style="color:#00e5a0;">✦</span><span>UIKit</span><span style="color:#00e5a0;">✦</span><span>React Native</span><span style="color:#00e5a0;">✦</span><span>WalletConnect</span><span style="color:#00e5a0;">✦</span><span>CryptoKit</span><span style="color:#00e5a0;">✦</span><span>Combine</span><span style="color:#00e5a0;">✦</span><span>Web3</span><span style="color:#00e5a0;">✦</span>
       </div>
-      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#2a2a38;white-space:nowrap;">
+      <div style="display:flex;gap:48px;padding-right:48px;font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:600;color:#5a6982;white-space:nowrap;">
         <span>Swift</span><span style="color:#00e5a0;">✦</span><span>SwiftUI</span><span style="color:#00e5a0;">✦</span><span>UIKit</span><span style="color:#00e5a0;">✦</span><span>React Native</span><span style="color:#00e5a0;">✦</span><span>WalletConnect</span><span style="color:#00e5a0;">✦</span><span>CryptoKit</span><span style="color:#00e5a0;">✦</span><span>Combine</span><span style="color:#00e5a0;">✦</span><span>Web3</span><span style="color:#00e5a0;">✦</span>
       </div>
     </div>
@@ -337,7 +337,7 @@ button{font-family:inherit;}
             <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);font-size:12.5px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">{{ t }}</span>
           </sc-for>
         </div>
-        <a href="https://github.com/Nobin987" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#00e5a0;font-family:'JetBrains Mono',monospace;transition:gap .2s;" style-hover="gap:14px;">View GitHub →</a>
+        <a href="{{ active.link }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#00e5a0;font-family:'JetBrains Mono',monospace;transition:gap .2s;" style-hover="gap:14px;">{{ active.linkText }}</a>
       </div>
 
       <!-- phone -->
@@ -435,6 +435,8 @@ class Component extends DCLogic {
       { name: "TokenB", num: "01", category: "Web3 · Finance", color: "#8b5cf6", initial: "TB", iconBg: "linear-gradient(145deg,#9b6bff,#d946ef)",
         period: "Jul 2025 — Present  ·  SwiftUI, Swift",
         tagline: "Your crypto asset center",
+        link: "https://apps.apple.com/us/app/tokenb/id6747426865",
+        linkText: "View App Store →",
         tech: ["SwiftUI", "Swift", "WalletConnect v2", "CryptoKit", "DEX APIs"],
         features: ["Multi-chain support", "Connect to Web3 dApps", "In-app asset conversion", "On-chain info & insights"],
         desc: [
@@ -445,6 +447,8 @@ class Component extends DCLogic {
       { name: "Rags2Riches", num: "02", category: "Social · Contests", color: "#f59e0b", initial: "R2", iconBg: "linear-gradient(145deg,#fbbf24,#f59e0b)",
         period: "May 2024 — Apr 2025  ·  Cocoa Touch, Swift",
         tagline: "Share ideas, win contests",
+        link: "https://github.com/Nobin987",
+        linkText: "View GitHub →",
         tech: ["Swift", "Alamofire", "AWS", "Socket.io", "XCTest"],
         features: ["Idea uploads", "Live contests", "Realtime sockets", "Branch deep links"],
         desc: [
@@ -455,6 +459,8 @@ class Component extends DCLogic {
       { name: "TaskRabbitClone", num: "03", category: "Marketplace · Cross-platform", color: "#22d3ee", initial: "TR", iconBg: "linear-gradient(145deg,#67e8f9,#22d3ee)",
         period: "Mar — Apr 2024  ·  React Native",
         tagline: "Discover & hire local services",
+        link: "https://github.com/Nobin987",
+        linkText: "View GitHub →",
         tech: ["React Native", "TypeScript", "iOS", "Android"],
         features: ["Service discovery", "Category browse", "Optimized rendering", "iOS + Android"],
         desc: [
@@ -465,6 +471,8 @@ class Component extends DCLogic {
       { name: "MultiCart", num: "04", category: "E-commerce", color: "#a78bfa", initial: "MC", iconBg: "linear-gradient(145deg,#c4b5fd,#a78bfa)",
         period: "Jan — Mar 2024  ·  Cocoa Touch, Swift",
         tagline: "Buyer & seller commerce",
+        link: "https://github.com/Nobin987",
+        linkText: "View GitHub →",
         tech: ["Swift", "Cocoa Touch", "SDK"],
         features: ["UI revamp", "Seller tools", "SDK upgrade", "Perf tuning"],
         desc: [
@@ -474,6 +482,8 @@ class Component extends DCLogic {
       { name: "ShowReel / B Cubed", num: "05", category: "Education · Courses", color: "#e23b46", initial: "B3", iconBg: "linear-gradient(145deg,#ef4452,#b91c1c)",
         period: "Jan — Dec 2023  ·  Cocoa Touch, Swift",
         tagline: "Learn & grow",
+        link: "https://apps.apple.com/us/app/showreel-b3-learn-grow/id1536190964",
+        linkText: "View App Store →",
         tech: ["Swift", "Cocoa Touch"],
         features: ["Entrepreneurship courses", "Track your progress", "Blockchain certificates", "Showcase achievements"],
         desc: [
@@ -484,6 +494,8 @@ class Component extends DCLogic {
       { name: "Shelter", num: "06", category: "Real Estate", color: "#34d399", initial: "SH", iconBg: "linear-gradient(145deg,#6ee7b7,#34d399)",
         period: "Sep — Dec 2022  ·  Cocoa Touch, Swift",
         tagline: "List & find properties",
+        link: "https://github.com/Nobin987",
+        linkText: "View GitHub →",
         tech: ["Swift", "Cocoa Touch"],
         features: ["Photo uploads", "Listings", "Property search", "Detail pages"],
         desc: [
