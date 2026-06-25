@@ -337,7 +337,7 @@ button{font-family:inherit;}
             <span style="padding:7px 13px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);font-size:12.5px;color:#c4c4d0;font-family:'JetBrains Mono',monospace;">{{ t }}</span>
           </sc-for>
         </div>
-        <a href="https://github.com/NobinNepolian" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#00e5a0;font-family:'JetBrains Mono',monospace;transition:gap .2s;" style-hover="gap:14px;">View GitHub →</a>
+        <a href="https://github.com/Nobin987" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:9px;font-size:14px;font-weight:600;color:#00e5a0;font-family:'JetBrains Mono',monospace;transition:gap .2s;" style-hover="gap:14px;">View GitHub →</a>
       </div>
 
       <!-- phone -->
@@ -348,7 +348,7 @@ button{font-family:inherit;}
             <div style="position:relative;width:100%;height:100%;border-radius:34px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%, color-mix(in srgb, var(--app) 22%, #0c0c12), #0a0a10 60%);display:flex;flex-direction:column;">
               <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px 8px;font-size:12px;font-family:'JetBrains Mono',monospace;color:#cfd0da;font-weight:600;"><span>9:41</span><span style="letter-spacing:1px;">●●● ▮</span></div>
               <div style="padding:14px 22px 0;display:flex;align-items:center;gap:12px;">
-                <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--app);color:#07070b;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;box-shadow:0 8px 24px var(--app);">{{ active.initial }}</span>
+                <span style="display:grid;place-items:center;width:46px;height:46px;border-radius:13px;background:var(--appicon);color:#fff;box-shadow:0 6px 18px rgba(0,0,0,0.45);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;box-shadow:0 8px 24px var(--app);">{{ active.initial }}</span>
                 <div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:#fff;">{{ active.name }}</div><div style="font-size:11px;color:#8a8a99;font-family:'JetBrains Mono',monospace;">{{ active.category }}</div></div>
               </div>
               <div style="margin:18px 18px 0;border-radius:20px;padding:22px 18px;background:linear-gradient(140deg,var(--app),color-mix(in srgb, var(--app) 30%, #07070b));position:relative;overflow:hidden;">
@@ -413,7 +413,7 @@ button{font-family:inherit;}
           <a href="mailto:nobinnepolian987@gmail.com" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">nobinnepolian987@gmail.com</a>
           <a href="tel:+971509524569" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">+971 50 952 4569</a>
           <a href="https://linkedin.com/in/nobin-nepolian" target="_blank" rel="noopener" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">LinkedIn ↗</a>
-          <a href="https://github.com/NobinNepolian" target="_blank" rel="noopener" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">GitHub ↗</a>
+          <a href="https://github.com/Nobin987" target="_blank" rel="noopener" style="color:#9a9aab;transition:color .2s;" style-hover="color:#00e5a0;">GitHub ↗</a>
         </div>
       </div>
     </div>
@@ -432,17 +432,17 @@ class Component extends DCLogic {
 
   data() {
     return [
-      { name: "TokenB", num: "01", category: "Web3 · Finance", color: "#00e5a0", initial: "TB",
+      { name: "TokenB", num: "01", category: "Web3 · Finance", color: "#8b5cf6", initial: "TB", iconBg: "linear-gradient(145deg,#9b6bff,#d946ef)",
         period: "Jul 2025 — Present  ·  SwiftUI, Swift",
-        tagline: "Self-custody multi-chain wallet",
+        tagline: "Your crypto asset center",
         tech: ["SwiftUI", "Swift", "WalletConnect v2", "CryptoKit", "DEX APIs"],
-        features: ["Live market tracking", "In-app DEX swap", "WalletConnect v2", "FaceID + AES vault"],
+        features: ["Multi-chain support", "Connect to Web3 dApps", "In-app asset conversion", "On-chain info & insights"],
         desc: [
           "Architected a comprehensive iOS crypto wallet from scratch — track markets, manage assets, send & receive securely.",
           "Engineered an in-app Crypto Swap on DEX APIs and integrated WalletConnect v2 for seamless dApp interaction.",
           "Secured assets with AES encryption and biometric (FaceID/TouchID) transaction authorization; 99.9% crash-free."
         ] },
-      { name: "Rags2Riches", num: "02", category: "Social · Contests", color: "#f59e0b", initial: "R2",
+      { name: "Rags2Riches", num: "02", category: "Social · Contests", color: "#f59e0b", initial: "R2", iconBg: "linear-gradient(145deg,#fbbf24,#f59e0b)",
         period: "May 2024 — Apr 2025  ·  Cocoa Touch, Swift",
         tagline: "Share ideas, win contests",
         tech: ["Swift", "Alamofire", "AWS", "Socket.io", "XCTest"],
@@ -452,7 +452,7 @@ class Component extends DCLogic {
           "Integrated Alamofire, AWS, Branch and Sockets for seamless realtime functionality.",
           "Added XCTest unit testing and comprehensive bug fixes for enhanced stability."
         ] },
-      { name: "TaskRabbitClone", num: "03", category: "Marketplace · Cross-platform", color: "#22d3ee", initial: "TR",
+      { name: "TaskRabbitClone", num: "03", category: "Marketplace · Cross-platform", color: "#22d3ee", initial: "TR", iconBg: "linear-gradient(145deg,#67e8f9,#22d3ee)",
         period: "Mar — Apr 2024  ·  React Native",
         tagline: "Discover & hire local services",
         tech: ["React Native", "TypeScript", "iOS", "Android"],
@@ -462,7 +462,7 @@ class Component extends DCLogic {
           "Optimized component rendering and state management for smoother transitions.",
           "Reduced memory overhead across both platforms."
         ] },
-      { name: "MultiCart", num: "04", category: "E-commerce", color: "#a78bfa", initial: "MC",
+      { name: "MultiCart", num: "04", category: "E-commerce", color: "#a78bfa", initial: "MC", iconBg: "linear-gradient(145deg,#c4b5fd,#a78bfa)",
         period: "Jan — Mar 2024  ·  Cocoa Touch, Swift",
         tagline: "Buyer & seller commerce",
         tech: ["Swift", "Cocoa Touch", "SDK"],
@@ -471,16 +471,17 @@ class Component extends DCLogic {
           "Revamped ~10% of the Buyer & Seller app user interface.",
           "Contributed to upgrading the SDK, enhancing its functionality and performance."
         ] },
-      { name: "ShowReel / B Cubed", num: "05", category: "Media", color: "#ff6b6b", initial: "SR",
+      { name: "ShowReel / B Cubed", num: "05", category: "Education · Courses", color: "#e23b46", initial: "B3", iconBg: "linear-gradient(145deg,#ef4452,#b91c1c)",
         period: "Jan — Dec 2023  ·  Cocoa Touch, Swift",
-        tagline: "Media reels experience",
+        tagline: "Learn & grow",
         tech: ["Swift", "Cocoa Touch"],
-        features: ["Reel UI", "Playback", "Bug fixes", "Stability"],
+        features: ["Entrepreneurship courses", "Track your progress", "Blockchain certificates", "Showcase achievements"],
         desc: [
-          "Delivered ~50% of the app's UI and functionality.",
+          "Delivered ~50% of the UI for an entrepreneurship learning platform — courses, progress and profiles.",
+          "Built course and certificate screens with blockchain-verified Certificates of Completion.",
           "Assisted with bug fixes to enhance functionality and stability."
         ] },
-      { name: "Shelter", num: "06", category: "Real Estate", color: "#34d399", initial: "SH",
+      { name: "Shelter", num: "06", category: "Real Estate", color: "#34d399", initial: "SH", iconBg: "linear-gradient(145deg,#6ee7b7,#34d399)",
         period: "Sep — Dec 2022  ·  Cocoa Touch, Swift",
         tagline: "List & find properties",
         tech: ["Swift", "Cocoa Touch"],
@@ -499,7 +500,7 @@ class Component extends DCLogic {
     const act = data[active];
     return {
       active: act,
-      phoneStyle: { "--app": act.color }
+      phoneStyle: { "--app": act.color, "--appicon": act.iconBg }
     };
   }
 
