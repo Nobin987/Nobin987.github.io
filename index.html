@@ -380,7 +380,7 @@ button{font-family:inherit;}
   </section>
 
   <!-- ===== EDUCATION ===== -->
-  <section style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 120px;">
+  <section id="education" style="position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:60px 40px 120px;">
     <div data-reveal style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#00e5a0;letter-spacing:2px;margin-bottom:18px;">05 — EDUCATION</div>
     <h2 data-reveal style="margin:0 0 50px;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,4vw,42px);letter-spacing:-1px;">Academic background</h2>
     <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
@@ -700,21 +700,8 @@ class Component extends DCLogic {
     };
     const counters = document.querySelectorAll("[data-count]");
 
-    // ---- card 3D tilt (skills + education) ----
-    const tiltCards = document.querySelectorAll("#skills [data-reveal], #education [data-reveal]");
-    tiltCards.forEach((card) => {
-      const enter = () => { card.style.transition = "transform .12s ease-out, opacity .85s, filter .85s"; };
-      const move = (e) => {
-        const r = card.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = "perspective(900px) rotateY(" + (px * 7) + "deg) rotateX(" + (-py * 7) + "deg) translateY(-4px)";
-      };
-      const leave = () => { card.style.transform = "none"; };
-      card.addEventListener("mouseenter", enter);
-      card.addEventListener("mousemove", move);
-      card.addEventListener("mouseleave", leave);
-    });
+    // ---- holographic 3D tilt + glare across all major cards ----
+    this.init3DCards();
 
     // ---- unified scroll-driven loop (rAF + getBoundingClientRect; robust to any scroller) ----
     const bar = document.getElementById("scroll-bar");
@@ -793,6 +780,279 @@ class Component extends DCLogic {
       sc.addEventListener("mousemove", this._tilt);
       sc.addEventListener("mouseleave", this._tiltReset);
     }
+
+    this.initWarpScroll();
+  }
+
+  // ===== HYPERDRIVE SCROLL =====
+  // A cohesive scroll-velocity engine: a 3D data-stream tunnel, content motion-blur,
+  // per-section "chapter" takeovers, and a live cyber HUD. All layers are appended to
+  // <body> so the framework's render diff never touches them.
+  initWarpScroll() {
+    if (this._warpInit) return;
+    this._warpInit = true;
+
+    const RM = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const hexToRgb = (h) => {
+      const m = h.replace("#", "");
+      const v = m.length === 3 ? m.split("").map((c) => c + c).join("") : m;
+      const n = parseInt(v, 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    };
+    const rgba = (h, a) => { const [r, g, b] = hexToRgb(h); return "rgba(" + r + "," + g + "," + b + "," + a + ")"; };
+
+    // ---- section map (label + accent that the whole scene reacts to) ----
+    const SECTIONS = [
+      { sel: "#top",        label: "HOME",       color: "#00e5a0" },
+      { sel: "#about",      label: "ABOUT",      color: "#22d3ee" },
+      { sel: "#skills",     label: "SKILLS",     color: "#a78bfa" },
+      { sel: "#experience", label: "EXPERIENCE", color: "#34d399" },
+      { sel: "#work",       label: "WORK",       color: "#f59e0b" },
+      { sel: "#education",  label: "EDUCATION",  color: "#f472b6" },
+      { sel: "#contact",    label: "CONTACT",    color: "#00e5a0" }
+    ].map((s) => ({ ...s, el: document.querySelector(s.sel) })).filter((s) => s.el);
+    if (!SECTIONS.length) return;
+
+    // ---- layers ----
+    const tunnel = document.createElement("canvas");
+    tunnel.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;transition:opacity .45s;";
+    document.body.appendChild(tunnel);
+
+    const blur = document.createElement("div");
+    blur.style.cssText = "position:fixed;inset:0;z-index:3;pointer-events:none;opacity:0;transition:opacity .22s;";
+    document.body.appendChild(blur);
+
+    const chapter = document.createElement("div");
+    chapter.style.cssText = "position:fixed;inset:0;z-index:96;pointer-events:none;overflow:hidden;display:grid;place-items:center;";
+    const ring = document.createElement("span");
+    ring.style.cssText = "position:absolute;left:50%;top:50%;border-radius:50%;border:2px solid #fff;transform:translate(-50%,-50%) scale(.05);opacity:0;will-change:transform,opacity;";
+    const word = document.createElement("div");
+    word.style.cssText = "font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:min(23vw,280px);letter-spacing:-.05em;line-height:1;color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.5);opacity:0;white-space:nowrap;will-change:transform,opacity,filter;";
+    chapter.appendChild(ring); chapter.appendChild(word);
+    document.body.appendChild(chapter);
+
+    // Minimal FX toggle. The verbose telemetry HUD (depth/velocity readouts) was
+    // removed; this tiny pill stays only as an unobtrusive off-switch so motion
+    // still degrades gracefully.
+    const hud = document.createElement("div");
+    hud.style.cssText = "position:fixed;left:18px;bottom:16px;z-index:95;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;color:#8b97a3;display:flex;align-items:center;gap:7px;cursor:pointer;user-select:none;padding:7px 12px 7px 10px;border-radius:999px;background:rgba(7,9,14,.4);backdrop-filter:blur(9px);-webkit-backdrop-filter:blur(9px);border:1px solid rgba(255,255,255,.09);opacity:.42;transition:opacity .35s ease,border-color .5s,box-shadow .5s;";
+    hud.innerHTML =
+      '<span data-w="dot" style="width:7px;height:7px;border-radius:50%;background:#00e5a0;box-shadow:0 0 9px #00e5a0;transition:background .45s,box-shadow .45s,opacity .3s;"></span>' +
+      '<span data-w="fxstate">FX</span>';
+    hud.addEventListener("mouseenter", () => { hud.style.opacity = "1"; });
+    hud.addEventListener("mouseleave", () => { hud.style.opacity = ".42"; });
+    document.body.appendChild(hud);
+    const W_ = (k) => hud.querySelector('[data-w="' + k + '"]');
+    const wDot = W_("dot"), wFxState = W_("fxstate");
+
+    this._warpNodes = [tunnel, blur, chapter, hud];
+
+    // ---- FX on/off (persisted; default off under reduced-motion) ----
+    let fxOn = (localStorage.getItem("warpFx") !== "0") && !RM;
+    const setFx = (on) => {
+      fxOn = on;
+      try { localStorage.setItem("warpFx", on ? "1" : "0"); } catch (e) {}
+      wFxState.textContent = on ? "FX" : "FX OFF";
+      wDot.style.opacity = on ? "1" : ".3";
+      tunnel.style.opacity = on ? "1" : ".22";
+      if (!on) blur.style.opacity = "0";
+    };
+    hud.addEventListener("click", () => setFx(!fxOn));
+    setFx(fxOn);
+
+    // ---- tunnel starfield ----
+    const ctx = tunnel.getContext("2d");
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0, H = 0, cx = 0, cy = 0, focal = 0, stars = [], isMobile = false;
+    const seed = () => {
+      const count = isMobile ? 90 : Math.min(230, Math.floor((W * H) / 8800));
+      stars = [];
+      for (let i = 0; i < count; i++) stars.push({ x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z: Math.random() });
+    };
+    const resize = () => {
+      W = window.innerWidth; H = window.innerHeight;
+      isMobile = W < 760;
+      cx = W / 2; cy = H / 2; focal = Math.min(W, H) * 0.62;
+      tunnel.width = W * DPR; tunnel.height = H * DPR;
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      hud.style.display = isMobile ? "none" : "block";
+      seed();
+    };
+    resize();
+    this._warpResize = resize;
+    window.addEventListener("resize", resize);
+
+    // ---- chapter takeover (per-letter 3D flip-in + streak + shockwave) ----
+    const triggerChapter = (s) => {
+      if (!fxOn || RM) return;
+      word.style.perspective = "850px";
+      word.style.transformStyle = "preserve-3d";
+      word.style.webkitTextStroke = "2px " + rgba(s.color, 0.55);
+      word.innerHTML = "";
+      s.label.split("").forEach((ch, i) => {
+        const sp = document.createElement("span");
+        sp.textContent = ch;
+        sp.style.cssText = "display:inline-block;will-change:transform,opacity;backface-visibility:hidden;";
+        word.appendChild(sp);
+        sp.animate([
+          { transform: "rotateY(-95deg) translateZ(-110px)", opacity: 0 },
+          { transform: "rotateY(0deg) translateZ(0)",        opacity: 1, offset: .5 },
+          { transform: "rotateY(0deg) translateZ(0)",        opacity: 1, offset: .72 },
+          { transform: "rotateY(72deg) translateZ(-90px)",   opacity: 0 }
+        ], { duration: 1150, delay: i * 46, easing: "cubic-bezier(.2,.8,.25,1)", fill: "forwards" });
+      });
+      word.animate([
+        { opacity: 0,   transform: "translateX(-22vw) skewX(-12deg)", filter: "blur(6px)" },
+        { opacity: .9,  transform: "translateX(0) skewX(0)",          filter: "blur(0px)", offset: .45 },
+        { opacity: .78, transform: "translateX(0) skewX(0)",          filter: "blur(0px)", offset: .68 },
+        { opacity: 0,   transform: "translateX(20vw) skewX(12deg)",   filter: "blur(6px)" }
+      ], { duration: 1200, easing: "cubic-bezier(.16,.84,.3,1)" });
+      const d = Math.max(W, H) * 0.92;
+      ring.style.width = d + "px"; ring.style.height = d + "px";
+      ring.style.borderColor = rgba(s.color, 0.7);
+      ring.animate([
+        { transform: "translate(-50%,-50%) scale(.04)", opacity: .5 },
+        { transform: "translate(-50%,-50%) scale(1)",   opacity: 0 }
+      ], { duration: 950, easing: "cubic-bezier(.2,.7,.2,1)" });
+    };
+
+    // ---- scroll state ----
+    let lastY = window.scrollY || 0, vel = 0, spd = 0, curIdx = -1;
+    let cur = hexToRgb(SECTIONS[0].color), tgt = cur.slice();
+    let wmx = 0, wmy = 0, camX = 0, camY = 0, roll = 0;   // 3D camera: mouse-look + bank-roll
+    this._warpMouse = (e) => { wmx = e.clientX / window.innerWidth - 0.5; wmy = e.clientY / window.innerHeight - 0.5; };
+    window.addEventListener("mousemove", this._warpMouse, { passive: true });
+
+    const setSection = (i) => {
+      const s = SECTIONS[i];
+      wDot.style.background = s.color;
+      wDot.style.boxShadow = "0 0 9px " + s.color;
+      hud.style.borderColor = rgba(s.color, 0.4);
+      hud.style.boxShadow = "0 6px 22px rgba(0,0,0,.4), 0 0 14px " + rgba(s.color, 0.16);
+    };
+    setSection(0);
+
+    const loop = () => {
+      const y = window.scrollY || (document.scrollingElement ? document.scrollingElement.scrollTop : 0) || 0;
+      const raw = y - lastY; lastY = y;
+      vel += (raw - vel) * 0.18;
+      spd += (Math.abs(raw) - spd) * 0.12;
+      // active section by viewport upper-third
+      const mid = window.innerHeight * 0.42;
+      let idx = 0;
+      for (let i = 0; i < SECTIONS.length; i++) {
+        if (SECTIONS[i].el.getBoundingClientRect().top <= mid) idx = i;
+      }
+      if (idx !== curIdx) {
+        const first = curIdx === -1;
+        curIdx = idx;
+        tgt = hexToRgb(SECTIONS[idx].color);
+        setSection(idx);
+        if (!first) triggerChapter(SECTIONS[idx]);
+      }
+
+      for (let k = 0; k < 3; k++) cur[k] = lerp(cur[k], tgt[k], 0.06);
+      const cr = cur[0] | 0, cg = cur[1] | 0, cb = cur[2] | 0;
+      const sf = fxOn ? 1 : 0.22;
+
+      // ---- 3D camera: vanishing point follows the mouse; bank-roll + FOV punch with speed ----
+      camX += (wmx * W * 0.14 - camX) * 0.06;
+      camY += (wmy * H * 0.14 - camY) * 0.06;
+      roll += ((clamp(vel * 0.0006, -0.22, 0.22) + wmx * 0.06) * (fxOn ? 1 : 0.3) - roll) * 0.07;
+      const ccx = cx + camX, ccy = cy + camY;
+      const fdyn = focal * (1 + clamp(spd * 0.004, 0, 0.3));
+
+      // ---- draw data-stream tunnel ----
+      ctx.clearRect(0, 0, W, H);
+      ctx.save();
+      ctx.translate(cx, cy); ctx.rotate(roll); ctx.translate(-cx, -cy);
+      const fwd = (vel * 0.9 + 1.15) * sf;
+      const split = clamp(spd * 0.05, 0, 3) * (fxOn ? 1 : 0);
+      for (const st of stars) {
+        st.z -= fwd * 0.0009;
+        if (st.z <= 0.02) { st.z += 1; st.x = Math.random() * 2 - 1; st.y = Math.random() * 2 - 1; }
+        else if (st.z > 1.04) { st.z -= 1; st.x = Math.random() * 2 - 1; st.y = Math.random() * 2 - 1; }
+        const f1 = fdyn / st.z;
+        const x1 = ccx + st.x * f1, y1 = ccy + st.y * f1;
+        if (x1 < -80 || x1 > W + 80 || y1 < -80 || y1 > H + 80) continue;
+        const zt = st.z + clamp(Math.abs(vel) * 0.0016, 0, 0.05) + 0.004;
+        const f2 = fdyn / zt;
+        const x2 = ccx + st.x * f2, y2 = ccy + st.y * f2;
+        const a = clamp((1 - st.z) * 0.9, 0, 0.9);
+        const lw = clamp((1 - st.z) * 2.2, 0.4, 2.4);
+        ctx.lineWidth = lw;
+        if (split > 0.6) {
+          ctx.strokeStyle = "rgba(255,45,85," + (a * 0.5) + ")";
+          ctx.beginPath(); ctx.moveTo(x2 - split, y2); ctx.lineTo(x1 - split, y1); ctx.stroke();
+          ctx.strokeStyle = "rgba(45,185,255," + (a * 0.5) + ")";
+          ctx.beginPath(); ctx.moveTo(x2 + split, y2); ctx.lineTo(x1 + split, y1); ctx.stroke();
+        }
+        ctx.strokeStyle = "rgba(" + cr + "," + cg + "," + cb + "," + a + ")";
+        ctx.beginPath(); ctx.moveTo(x2, y2); ctx.lineTo(x1, y1); ctx.stroke();
+        ctx.fillStyle = "rgba(" + Math.min(255, cr + 70) + "," + Math.min(255, cg + 70) + "," + Math.min(255, cb + 70) + "," + a + ")";
+        ctx.beginPath(); ctx.arc(x1, y1, lw * 0.6, 0, 6.283); ctx.fill();
+      }
+      ctx.restore();
+
+      // ---- velocity motion-blur on content ----
+      if (fxOn && !isMobile && !RM) {
+        const bpx = clamp((spd - 2) * 0.16, 0, 5.5);
+        if (bpx > 0.25) {
+          blur.style.opacity = "1";
+          blur.style.backdropFilter = blur.style.webkitBackdropFilter = "blur(" + bpx.toFixed(2) + "px)";
+        } else {
+          blur.style.opacity = "0";
+        }
+      }
+
+      this._warpRaf = requestAnimationFrame(loop);
+    };
+    loop();
+  }
+
+  // Holographic 3D tilt + cursor-tracking specular glare on every major card.
+  // Only inline styles are touched (no DOM restructuring), so the framework's
+  // render diff is never disturbed.
+  init3DCards() {
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (window.matchMedia && !window.matchMedia("(pointer:fine)").matches) return;
+    const selectors = [
+      "#skills > div:last-child > div",
+      "#experience [data-reveal] > div",
+      "#education .two-col > div",
+      "#about .two-col > [data-reveal]:last-child > div:not(:first-child)",
+      "#contact > [data-reveal]"
+    ];
+    const cards = [];
+    selectors.forEach((s) => document.querySelectorAll(s).forEach((el) => cards.push(el)));
+    cards.forEach((card) => {
+      let baseImg = getComputedStyle(card).backgroundImage;
+      if (baseImg === "none") baseImg = "";
+      const baseShadow = card.style.boxShadow || "";
+      card.style.transformStyle = "preserve-3d";
+      card.style.willChange = "transform";
+      card.addEventListener("mouseenter", () => {
+        card.style.transition = "transform .14s ease-out, box-shadow .25s ease-out";
+        card.style.zIndex = "3";
+      });
+      card.addEventListener("mousemove", (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        const rx = (0.5 - py) * 13, ry = (px - 0.5) * 13;
+        card.style.transform = "perspective(950px) rotateX(" + rx.toFixed(2) + "deg) rotateY(" + ry.toFixed(2) + "deg) translateZ(16px)";
+        card.style.backgroundImage = "radial-gradient(circle at " + (px * 100).toFixed(1) + "% " + (py * 100).toFixed(1) + "%, rgba(255,255,255,.17), rgba(255,255,255,.04) 32%, transparent 62%)" + (baseImg ? ", " + baseImg : "");
+        card.style.boxShadow = "0 26px 60px rgba(0,0,0,.45)" + (baseShadow ? ", " + baseShadow : "");
+      });
+      card.addEventListener("mouseleave", () => {
+        card.style.transform = "";
+        card.style.backgroundImage = baseImg;
+        card.style.boxShadow = baseShadow;
+        card.style.zIndex = "";
+      });
+    });
   }
 
   heroScreen(type, a) {
@@ -917,6 +1177,10 @@ class Component extends DCLogic {
     if (this._heroRaf) cancelAnimationFrame(this._heroRaf);
     if (this._bg3dRaf) cancelAnimationFrame(this._bg3dRaf);
     if (this._bg3dMouse) window.removeEventListener("mousemove", this._bg3dMouse);
+    if (this._warpRaf) cancelAnimationFrame(this._warpRaf);
+    if (this._warpResize) window.removeEventListener("resize", this._warpResize);
+    if (this._warpMouse) window.removeEventListener("mousemove", this._warpMouse);
+    if (this._warpNodes) this._warpNodes.forEach((n) => n && n.remove());
   }
 }
 </script>
